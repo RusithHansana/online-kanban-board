@@ -1,0 +1,36 @@
+.app__navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--secondary-color);
+}
+
+.app__navbar-input {
+    width: 40%;
+    
+    input {
+        background: var(--secondary-color);
+        width: 100%;
+        height: 2rem;
+        text-align: center;
+        color: var(--highlight-green);
+        font-size: 1.5rem;
+        letter-spacing: 0.5rem;
+        border: none;
+    }
+
+    input:focus {
+        outline: none;
+        border: none;
+        border-bottom: 2px solid var(--highlight-green);
+    }
+
+    ::placeholder {
+        color: var(--highlight-green);
+        font-size: 1.5rem;
+        letter-spacing: 0.75rem;
+        
+    }
+}
