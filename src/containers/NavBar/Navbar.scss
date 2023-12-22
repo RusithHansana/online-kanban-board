@@ -34,3 +34,19 @@
         
     }
 }
+
+.app__navbar-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    button {
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 70%;
+        text-align: center;
+        padding: 1rem;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}

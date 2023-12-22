@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap");
 
 :root {
-  --background-color: #222121;
+  --primary-color: #222121;
   --secondary-color: #1b1a1a;
   --font-color: #ebe8f1;
   --highlight-green: #d0ff14;
@@ -12,7 +12,7 @@
 }
 
 * {
-  background: var(--background-color);
+  background: var(--primary-color);
   color: var(--font-color);
   font-family: "Fira sans";
   margin: 0;

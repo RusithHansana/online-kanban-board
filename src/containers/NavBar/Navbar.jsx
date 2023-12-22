@@ -12,7 +12,7 @@ const Navbar = () => {
                 <input type="text" placeholder="Board Name" />
             </div>
             <div className="app__navbar-button">
-                <button>Account</button>
+                <button>img</button>
             </div>
         </div>
     );
