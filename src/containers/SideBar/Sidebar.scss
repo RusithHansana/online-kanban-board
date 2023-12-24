@@ -5,7 +5,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 2rem 0;
     background: var(--secondary-color);
 }
 
@@ -17,47 +16,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    .board-items {
-        background: inherit;
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 5%;
-        justify-content: center;
-        align-items: center;
-        margin: 1rem 1rem;
-        border-left: 4px solid var(--highlight-green);
-
-        button {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            margin-left: 2rem;
-            background: inherit;
-            border: none;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 5px;
-            cursor: pointer;
-            
-            li {
-                background: var(--secondary-color);
-            }
-            
-            :hover {
-                background: var(--highlight-green);
-                color: var(--secondary-color);
-                border-radius: 10px;                
-                padding: 1rem 2rem;    
-            }
-            
-            
-        
-        }
+    overflow-y: scroll;
+  
+    ::-webkit-scrollbar {
+        width: 1px;
     }
-
-    
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+  }

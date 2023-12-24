@@ -5,10 +5,10 @@
   --secondary-color: #1b1a1a;
   --font-color: #ebe8f1;
   --highlight-green: #d0ff14;
-  --highlightcyan: #3ef2dd;
-  --highlightpink: #f44bc2;
-  --highlightpurple: #9313b2;
-  --highlightblue: #127ada;
+  --highlight-cyan: #3ef2dd;
+  --highlight-pink: #f44bc2;
+  --highlight-purple: #9313b2;
+  --highlight-blue: #127ada;
 }
 
 * {
