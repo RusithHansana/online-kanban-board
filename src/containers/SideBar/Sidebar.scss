@@ -6,6 +6,11 @@
     justify-content: flex-start;
     align-items: flex-start;
     background: var(--secondary-color);
+
+    h1 {
+      background: inherit;
+      padding: 1rem;
+    }
 }
 
 .app__sidebar-boards {
