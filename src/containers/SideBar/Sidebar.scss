@@ -9,7 +9,7 @@
 
     h1 {
       background: inherit;
-      padding: 1rem;
+      padding: auto;
     }
 }
 
@@ -22,10 +22,6 @@
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
-  
-    ::-webkit-scrollbar {
-        width: 1px;
-    }
 }
 
 /* width */

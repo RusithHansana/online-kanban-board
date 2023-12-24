@@ -2,7 +2,7 @@ import {React, useState} from "react";
 
 import './BoardItem.scss';
 
-const BoardItem = ({item}) => {
+const BoardItem = ({item, onItemClick}) => {
     const [isHovered, setHovered] = useState(false);
 
     const handleMouseEnter = () => {

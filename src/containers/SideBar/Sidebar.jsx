@@ -1,8 +1,8 @@
 import React from "react";
 
-import BoardItem from "./BoardItem.jsx";
 import { Boards } from "../../utils/BoardData/Boards.js";
 import './Sidebar.scss';
+import BoardItem from "./BoardItem.jsx";
 
 const Sidebar = () => {
     return (
@@ -11,7 +11,7 @@ const Sidebar = () => {
             <ul className="app__sidebar-boards">
                 {
                     Boards.map(item => (
-                            <BoardItem item={item} key={item.id}/>
+                            <BoardItem item={item} key={item.id} />
                         )
                     )
                 }

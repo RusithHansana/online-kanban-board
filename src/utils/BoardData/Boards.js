@@ -9,7 +9,6 @@ export const Boards = [
     { id: 8, name: 'API Integration', color: '--highlight-pink' },
     { id: 9, name: 'Calendar Widget', color: '--highlight-purple' },
     { id: 10, name: 'Chat Application', color: '--highlight-blue' },
-    { id: 11, name: 'Project Management', color: '--highlight-yellow' },
     { id: 12, name: 'E-commerce Platform', color: '--highlight-cyan' },
     { id: 13, name: 'Blog Redesign', color: '--highlight-pink' },
     { id: 14, name: 'Dashboard Analytics', color: '--highlight-purple' },
