@@ -8,8 +8,10 @@ import Sidebar  from './containers/SideBar/Sidebar.jsx';
 function App() {
   return (
     <div className="App">
-      <Navbar />
       <Sidebar />
+      <div className='App__right'>
+        <Navbar />
+      </div>
     </div>
   );
 }

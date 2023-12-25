@@ -1,24 +1,29 @@
 .app__navbar {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 1rem 2rem;
     background: var(--secondary-color);
 }
 
 .app__navbar-input {
-    width: 40%;
-    
+    width: 20%;
+    margin-right: 2rem;
+
     input {
         background: var(--secondary-color);
         width: 100%;
         height: 2rem;
         text-align: center;
-        color: var(--highlight-green);
-        font-size: 1.5rem;
+        color: var(--font-color);
+        font-size: 18px;
         letter-spacing: 0.5rem;
         border: none;
+
+        :hover {
+            border: 1px solid gray;
+        }
     }
 
     input:focus {
@@ -28,9 +33,7 @@
     }
 
     ::placeholder {
-        color: var(--highlight-green);
-        font-size: 1.5rem;
-        letter-spacing: 0.75rem;
+        letter-spacing: 0.5rem;
         
     }
 }

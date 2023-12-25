@@ -1,0 +1,9 @@
+.App {
+    display: grid;
+    grid-template-columns: 1fr 4fr; /* Two columns with equal width */ /* Adjust the gap between columns */
+}
+
+.App__right {
+    display: grid;
+    grid-template-rows: 1fr 11fr; /* Two rows with equal height */
+}

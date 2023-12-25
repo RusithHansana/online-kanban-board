@@ -5,11 +5,8 @@ import './Navbar.scss';
 const Navbar = () => {
     return (
         <div className="app__navbar">
-            <div className="app__navbar-logo">
-                <img src="" alt="logo" />
-            </div>
             <div className="app__navbar-input">
-                <input type="text" placeholder="Board Name" />
+                <input type="text" placeholder="Happening App" />
             </div>
             <div className="app__navbar-button">
                 <button>img</button>
