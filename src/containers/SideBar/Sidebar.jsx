@@ -8,14 +8,16 @@ const Sidebar = () => {
     return (
         <div className="app__sidebar">
             <h1 className="app__sidebar-title">Your Boards</h1>
-            <ul className="app__sidebar-boards">
-                {
-                    Boards.map(item => (
-                            <BoardItem item={item} key={item.id} />
+            <div className="app__sidebar-scroll">
+                <ul className="boards">
+                    {
+                        Boards.map(item => (
+                                <BoardItem item={item} key={item.id} />
+                            )
                         )
-                    )
-                }
-            </ul>
+                    }
+                </ul>
+            </div>
         </div>
     );
 }
