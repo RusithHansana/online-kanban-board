@@ -1,9 +1,11 @@
 .App {
+    height: 100vh;
     display: grid;
     grid-template-columns: 1fr 4fr; /* Two columns with equal width */ /* Adjust the gap between columns */
 }
 
 .App__right {
+    height: 100vh;
     display: grid;
     grid-template-rows: 1fr 19fr; /* Two rows with equal height */
 }
