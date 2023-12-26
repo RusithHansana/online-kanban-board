@@ -5,6 +5,10 @@
     align-items: center;
     padding: 1rem 2rem;
     background: var(--secondary-color);
+
+    @media screen and (max-width: 900px) {
+        justify-content: space-between;
+    }
 }
 
 .app__navbar-input {
@@ -24,6 +28,10 @@
         :hover {
             border: 1px solid gray;
         }
+
+        @media screen and (max-width: 900px) {
+            font-size: 12px;
+        }
     }
 
     input:focus {
@@ -34,8 +42,15 @@
 
     ::placeholder {
         letter-spacing: 0.5rem;
-        
+        @media screen and (max-width: 900px) {
+            letter-spacing: 0.25rem;
+        }
     }
+
+    @media screen and (max-width: 900px) {
+        width: 50%;
+    }
+
 }
 
 .app__navbar-button {
