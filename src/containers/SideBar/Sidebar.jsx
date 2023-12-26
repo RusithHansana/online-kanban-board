@@ -27,9 +27,15 @@ const Sidebar = () => {
             <div className="app__sidebar-menu">
                 <HiMenuAlt2 onClick={ () => setToggle(true) }/>
                 {
-                    toggle && (
-                        <h1 className="app__sidebar-menu title">Your Boards</h1>
-                    )
+                    toggle?(
+                        <motion.div
+                            whileInView={ { x: [ -10, 0 ]} }
+                            transition={ { duration: 0.85, ease: 'easeOut'} }
+                            >
+                                <HiX onClick={ () => setToggle(false) }/>
+                                <h1 className="app__sidebar-menu title">Your Boards</h1>
+                        </motion.div>
+                    ):null
                 }
             </div>
         </div>

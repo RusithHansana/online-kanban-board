@@ -44,9 +44,30 @@
     color: var(--font-color);
   }
   
-  .title {
-    font-size: 16px;
-    letter-spacing: 1rem;
+
+  div {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-top: 2rem;
+    padding-left: 2rem;
+
+    svg {
+      width: 35px;
+      height: 35px;
+      background: var(--secondary-color);
+      color: var(--font-color);
+    }
+
+    .title {
+      width: 100%;
+      h1{
+        font-size: 16px;
+        letter-spacing: 1rem;
+      }
+    }
   }
 
   @media screen and (max-width: 900px) {
