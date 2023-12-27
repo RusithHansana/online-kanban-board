@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { HiMenuAlt2, HiX } from 'react-icons/hi';
+import { Menu, XSquare } from 'react-feather';
 import { motion } from 'framer-motion';
 
 import './Sidemenu.scss';
@@ -8,14 +8,14 @@ const Sidemenu = ({boards}) => {
     const [toggle, setToggle ] = useState(false);    
     return (
         <div className="app__sidebar-menu">
-            <HiMenuAlt2 onClick={ () => setToggle(true) }/>
+            <Menu onClick={ () => setToggle(true) }/>
             {
                 toggle?(
                     <motion.div
                         whileInView={ { x: [ -10, 0 ]} }
                         transition={ { duration: 0.85, ease: 'easeOut'} }
                         >
-                            <HiX onClick={ () => setToggle(false) }/>
+                            <XSquare onClick={ () => setToggle(false) }/>
                             <h1 className="app__sidebar-menu title">Your Boards</h1>
                             <ul className="boards">
                                 {

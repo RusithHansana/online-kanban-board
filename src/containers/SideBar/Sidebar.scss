@@ -17,10 +17,10 @@
     }
 
     @media screen and (max-width: 900px) {
-      height: 80px;
+      height: 64px;
       justify-content: center;
       align-items: center;
-      background-color: var(--secondary-color);
+      background: var(--primary-color);
     }
 }
 

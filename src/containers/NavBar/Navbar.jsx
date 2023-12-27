@@ -1,4 +1,5 @@
 import React from "react";
+import { LogOut } from "react-feather";
 
 import './Navbar.scss';
 
@@ -9,7 +10,7 @@ const Navbar = () => {
                 <input type="text" placeholder="Happening App" />
             </div>
             <div className="app__navbar-button">
-                <button>img</button>
+                <LogOut />
             </div>
         </div>
     );
