@@ -1,4 +1,5 @@
 import React from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import './App.scss';
 import { BoardList } from './utils/BoardData/Boards.js';
@@ -6,13 +7,19 @@ import Navbar from './containers/NavBar/Navbar.jsx';
 import Sidebar  from './containers/SideBar/Sidebar.jsx';
 import TaskBoard from './components/TaskBoard/TaskBoard.jsx';
 
+const onDragEnd = () => {
+  
+}
+
 function App() {
   return (
     <div className="App">
       <Sidebar />
       <div className='App__right'>
         <Navbar />
-        <TaskBoard board={BoardList[0]}/>
+        <DragDropContext onDragEnd={ onDragEnd }>
+          <TaskBoard board={BoardList[0]}/>
+        </DragDropContext>
       </div>
     </div>
   );

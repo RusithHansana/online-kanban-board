@@ -1,18 +1,18 @@
 const Tasks = {
-  1: { 
-    id: 1, 
+  "t1": { 
+    id: "t1", 
     content: 'Take out the garbage' 
   },
-  2: { 
-    id: 2, 
+  "t2": { 
+    id: "t2", 
     content: 'Watch my favorite show' 
   },
-  3: { 
-    id: 3, 
+  "t3": { 
+    id: "t3", 
     content: 'Charge my phone' 
   },
-  4: { 
-    id: 4, 
+  "t4": { 
+    id: "t4", 
     content: 'Cook dinner' 
   },
 
@@ -20,32 +20,32 @@ const Tasks = {
 
 
 export const Cards = {
-  1: {
-    id: 1,
+  "c1": {
+    id: "c1",
     title: 'To do',
-    taskList: [ Tasks[1], Tasks[2] ],
+    taskList: [ Tasks["t1"], Tasks["t2"] ],
   },
-  2: {
-    id: 2,
+  "c2": {
+    id: "c2",
     title: 'In progress',
-    taskList: [Tasks[3]],
+    taskList: [Tasks["t3"]],
   },
-  3: {
-    id: 3,
+  "c3": {
+    id: "c3",
     title: 'Done',
-    taskList: [Tasks[4]],
+    taskList: [Tasks["t4"]],
   },
 }
 
 export const Boards = {
-  1: {
-    id: 1, 
+  "b1": {
+    id: "b1", 
     name: 'Chores', 
     color: '--highlight-green',
-    cardList: [ Cards[1], Cards[2], Cards[3]]
+    cardList: [ Cards["c1"], Cards["c2"], Cards["c3"]]
   },
-  2: {
-    id: 2, 
+  "b2": {
+    id: "b2", 
     name: 'Mobile App', 
     color: '--highlight-cyan'
   }
@@ -53,4 +53,4 @@ export const Boards = {
 }
 
 
-export const BoardList = [ Boards[1], Boards[2]];
+export const BoardList = [ Boards["b1"], Boards["b2"]];
