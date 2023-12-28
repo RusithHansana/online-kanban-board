@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import { Boards } from "../../utils/BoardData/Boards.js";
+import { BoardList } from "../../utils/BoardData/Boards.js";
 import './Sidebar.scss';
 import BoardItem from "./BoardItems/BoardItem.jsx";
 import Sidemenu from './SideMenu/Sidemenu.jsx';
@@ -14,15 +14,15 @@ const Sidebar = () => {
                 <div className="app__sidebar-scroll">
                     <ul className="boards">
                         {
-                            Boards.map(item => (
-                                    <BoardItem item={item} key={item.id} />
+                            BoardList.map(board => (
+                                    <BoardItem item={board} key={board.id} />
                                 )
                             )
                         }
                     </ul>
                 </div>
             </div>
-           <Sidemenu boards= {Boards} />
+           <Sidemenu boards= {BoardList} />
         </div>
     );
 }
