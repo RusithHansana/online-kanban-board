@@ -4,7 +4,6 @@ import './Task.scss';
 
 const Task = ({task, index}) => {
   return (
-
           <div className="task">
               {task.content}
           </div>
