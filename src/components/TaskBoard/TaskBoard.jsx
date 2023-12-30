@@ -4,7 +4,7 @@ import { Droppable } from 'react-beautiful-dnd'
 import Card from './Card/Card';
 import './TaskBoard.scss';
 
-const TaskBoard = ({board}) => {
+const TaskBoard = ({ CardList }) => {
   //react-beautiful-dnd does not work with strict mode
   //this is the way to bypass it
   const [ enabled, setEnabled ] = useState(false);
@@ -35,7 +35,7 @@ const TaskBoard = ({board}) => {
           ref={provided.innerRef}
         >
           <ul className="app__taskboard-cards">
-            {board.cardList.map((card, index) => (
+            {CardList.map((card, index) => (
               <li key={card.id}>
                 <Card card={card} index={index+1}/>
               </li>
