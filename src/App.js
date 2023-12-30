@@ -3,8 +3,8 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 import './App.scss';
 import { BoardList } from './utils/BoardData/Boards.js';
-import Navbar from './containers/NavBar/Navbar.jsx';
-import Sidebar  from './containers/SideBar/Sidebar.jsx';
+import Navbar from './components/NavBar/Navbar.jsx';
+import Sidebar  from './components/SideBar/Sidebar.jsx';
 import TaskBoard from './components/TaskBoard/TaskBoard.jsx';
 
 const onDragEnd = () => {
