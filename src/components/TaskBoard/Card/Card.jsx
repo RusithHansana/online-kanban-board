@@ -1,5 +1,6 @@
 import React, { useState, useEffect }from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { PlusCircle } from 'react-feather'
 
 import Task from '../Task/Task';
 import './Card.scss';
@@ -70,6 +71,9 @@ const Card = ({ card, index}) => {
                                     
                                 ))}
                                 {provided.placeholder}
+                                {
+                                 card.title === 'To do'?<button className="btn-tasklist"><PlusCircle />Add More</button>: null   
+                                }
                             </ul>
                         ) 
                     }
