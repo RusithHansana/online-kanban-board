@@ -4,6 +4,7 @@ import { PlusCircle } from 'react-feather'
 
 import Task from '../Task/Task';
 import './Card.scss';
+import { Tasks } from '../../../utils/BoardData/Boards';
 
 const Card = ({ card, index}) => {
     const [ enabled, setEnabled ] = useState(false);
@@ -49,12 +50,12 @@ const Card = ({ card, index}) => {
                                 {...provided.droppableProps}
                                 ref={provided.innerRef}    
                             >
-                                {card.taskList.map((task, index) => (
+                                {card.taskOrder.map((taskId, index) => (
                                     <Draggable
-                                        draggableId={task.id}
+                                        draggableId={taskId}
                                         index={index}
                                         type="task"
-                                        key={task.id}
+                                        key={taskId}
                                     >
                                         {
                                             (provided) => (
@@ -63,7 +64,7 @@ const Card = ({ card, index}) => {
                                                     {...provided.dragHandleProps}
                                                     ref={provided.innerRef}
                                                 >
-                                                    <Task task={task} index={index} key={task.id}/>
+                                                    <Task task={Tasks[taskId]} index={index}/>
                                                 </li>
                                             )
                                         }

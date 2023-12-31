@@ -1,4 +1,4 @@
-const Tasks = {
+export const Tasks = {
   "t1": { 
     id: "t1", 
     content: 'Take out the garbage' 
@@ -15,6 +15,14 @@ const Tasks = {
     id: "t4", 
     content: 'Cook dinner' 
   },
+  "t5": {
+    id:"t5",
+    content: 'Fix this damn error'
+  },
+  "t6": {
+    id:"t6",
+    content: 'Fix new error'
+  }
 
 }
 
@@ -23,17 +31,17 @@ export const Cards = {
   "c1": {
     id: "c1",
     title: 'To do',
-    taskList: [ Tasks["t1"], Tasks["t2"] ],
+    taskOrder: ["t1", "t2", "t6"],
   },
   "c2": {
     id: "c2",
     title: 'In progress',
-    taskList: [Tasks["t3"]],
+    taskOrder: ["t5", "t4"],
   },
   "c3": {
     id: "c3",
     title: 'Done',
-    taskList: [Tasks["t4"]],
+    taskOrder: ["t3"],
   },
 }
 
@@ -42,7 +50,7 @@ export const Boards = {
     id: "b1", 
     name: 'Chores', 
     color: '--highlight-green',
-    cardList: [ Cards["c1"], Cards["c2"], Cards["c3"]]
+    cardOrder: [ "c1", "c2", "c3"]
   },
   "b2": {
     id: "b2", 

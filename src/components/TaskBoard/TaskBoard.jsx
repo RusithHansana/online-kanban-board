@@ -3,6 +3,7 @@ import { Droppable } from 'react-beautiful-dnd'
 
 import Card from './Card/Card';
 import './TaskBoard.scss';
+import { Cards } from '../../utils/BoardData/Boards';
 
 const TaskBoard = ({ CardList }) => {
   //react-beautiful-dnd does not work with strict mode
@@ -35,9 +36,9 @@ const TaskBoard = ({ CardList }) => {
           ref={provided.innerRef}
         >
           <ul className="app__taskboard-cards">
-            {CardList.map((card, index) => (
-              <li key={card.id}>
-                <Card card={card} index={index+1}/>
+            {CardList.map((cardId, index) => (
+              <li key={cardId}>
+                <Card card={Cards[cardId]} index={index}/>
               </li>
             ))}
             {provided.placeholder}

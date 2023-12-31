@@ -11,7 +11,7 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-      cardList: BoardList[0].cardList
+      cardList: BoardList[0].cardOrder
     }
   }
  
@@ -22,20 +22,22 @@ class App extends Component {
     if(!destination)
       return;
 
+    console.log(source);
     //Home is where the element is dragged from
     const home = this.state.cardList[source.index];
-
-    const taskList = [...home.taskList];
-    taskList.splice(source.index, 1);
-    taskList.splice(destination.index, 0, home.taskList[source.index])
-    
-    const newHome = {
-      ...home,
-      taskList: taskList 
+    if(source.droppableId === destination.droppableId){
+      const taskList = [...home.taskList];
+      taskList.splice(source.index, 1);
+      taskList.splice(destination.index, 0, home.taskList[source.index])
+      
+      const newHome = {
+        ...home,
+        taskList: taskList 
+      }
+      
+      newState = [...this.state.cardList]
+      newState[source.index] = newHome
     }
-    
-    newState = [...this.state.cardList]
-    newState[source.index] = newHome
     
     this.setState({
       cardList: newState
