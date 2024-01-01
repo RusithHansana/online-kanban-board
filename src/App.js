@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import './App.scss';
@@ -7,57 +7,26 @@ import Navbar from './components/NavBar/Navbar.jsx';
 import Sidebar  from './components/SideBar/Sidebar.jsx';
 import TaskBoard from './components/TaskBoard/TaskBoard.jsx';
  
-class App extends Component {
-  constructor(){
-    super()
-    this.state = {
-      cardList: BoardList[0].cardOrder
-    }
+const App = () => {
+  const [ board, setBoard ] = useState(BoardList[0]);
+
+  const onDragEnd = (result) => {
+
   }
+
  
-  
-  onDragEnd = (result) => {
-    const { destination, source, draggableId, type } = result;
-    let newState = [];
-    if(!destination)
-      return;
-
-    console.log(source);
-    //Home is where the element is dragged from
-    const home = this.state.cardList[source.index];
-    if(source.droppableId === destination.droppableId){
-      const taskList = [...home.taskList];
-      taskList.splice(source.index, 1);
-      taskList.splice(destination.index, 0, home.taskList[source.index])
-      
-      const newHome = {
-        ...home,
-        taskList: taskList 
-      }
-      
-      newState = [...this.state.cardList]
-      newState[source.index] = newHome
-    }
-    
-    this.setState({
-      cardList: newState
-    })
-    return;
-  }
-
-  render(){
       return (
         <div className="App">
           <Sidebar />
           <div className='App__right'>
             <Navbar />
-            <DragDropContext onDragEnd={ this.onDragEnd }>
-              <TaskBoard CardList={ this.state.cardList }/>
+            <DragDropContext onDragEnd={ onDragEnd }>
+              <TaskBoard CardList={ board.cardOrder }/>
             </DragDropContext>
           </div>
         </div>
       );
-  }
+  
 }
 
 export default App;
