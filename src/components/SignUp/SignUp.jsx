@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Form } from 'react-router-dom';
+import { User } from "react-feather";
 
 import './SignUp.scss';
 import FormInput from './FormInput';
+import SignUpFooter from './SignUpFooter';
 
 const SignUp = () => {
     const [ isRegistered, setIsRegistered ] = useState(false);
@@ -61,28 +63,40 @@ const SignUp = () => {
     }
     return (
         <div className="signup">
+            <img src='' alt='welcome'/>
             <Form className="signup-form">
-                <h1>{ isRegistered? "Register" : "Sign In" }</h1>
-                {
-                    isRegistered? (
-                        inputs.map(input => (
-                            <FormInput 
-                                {...input}
-                                key={input.id}
-                            />
-                        ))
-                    ) : (
-                        <>
-                            <FormInput 
-                                {...inputs[1]}
-                            />
-                            <FormInput 
-                                {...inputs[2]}
-                            />
-                        </>
-                    )
-                }
-                <div onClick={handleButton}>{ isRegistered? "Sign In" : "Register" }</div>    
+                <div className='form-header'>
+                    <User />
+                    <h1> Welcome !</h1>
+                </div>
+                <div className="inputs">
+                    {
+                        isRegistered? (
+                            inputs.map(input => (
+                                <FormInput 
+                                    {...input}
+                                    key={input.id}
+                                />
+                            ))
+                        ) : (
+                            <>
+                                <FormInput 
+                                    {...inputs[1]}
+                                />
+                                <FormInput 
+                                    {...inputs[2]}
+                                />
+                            </>
+                        )
+                    }
+                    <button>{ isRegistered? "Register": "Sign in" }</button>
+                </div>
+                <div className="form-footer">
+                    { isRegistered 
+                        ? <SignUpFooter message={"Already have an account? "} action={"Sign in"} handleButton={handleButton}/>
+                        : <SignUpFooter message={"Don't have an account? "} action={"Register"} handleButton={handleButton}/>
+                    }
+                </div>    
             </Form>
         </div>
     );
