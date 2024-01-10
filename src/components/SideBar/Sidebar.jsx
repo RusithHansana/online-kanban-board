@@ -1,12 +1,11 @@
 import React from 'react';
 
-
-import { BoardList } from "../../utils/BoardData/Boards.js";
 import './Sidebar.scss';
 import BoardItem from "./BoardItems/BoardItem.jsx";
 import Sidemenu from './SideMenu/Sidemenu.jsx';
+import { BoardList, Boards } from '../../utils/BoardData/Boards.js';
 
-const Sidebar = () => {
+const Sidebar = ({ BoardIds }) => {
     return (
         <div className="app__sidebar">
             <div className="app__sidebar-bar">
@@ -14,15 +13,15 @@ const Sidebar = () => {
                 <div className="app__sidebar-scroll">
                     <ul className="boards">
                         {
-                            BoardList.map(board => (
-                                    <BoardItem item={board} key={board.id} />
-                                )
+                            BoardIds.map(boardId => {
+                                return <BoardItem item={Boards[boardId]} key={boardId} />
+                            }
                             )
                         }
                     </ul>
                 </div>
             </div>
-           <Sidemenu boards= {BoardList} />
+            <Sidemenu boards={BoardList} />
         </div>
     );
 }

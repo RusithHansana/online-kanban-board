@@ -1,8 +1,8 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 
 import './BoardItem.scss';
 
-const BoardItem = ({item, onItemClick}) => {
+const BoardItem = ({ item, onItemClick }) => {
     const [isHovered, setHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -22,7 +22,7 @@ const BoardItem = ({item, onItemClick}) => {
     };
 
     return (
-        <div className="board-items" style={{borderLeft: `4px solid var(${item.color})`}}>
+        <div className="board-items" style={{ borderLeft: `4px solid var(${item.color})` }}>
             <button>
                 <li
                     onMouseEnter={handleMouseEnter}
