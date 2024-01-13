@@ -9,7 +9,7 @@ import TaskBoard from "./components/TaskBoard/TaskBoard.jsx";
 
 const App = () => {
   const [user, setUser] = useState(Users.u1);
-  const [board, setBoard] = useState(user.boardList);
+  const [boards, setBoards] = useState(user.boardList);
 
   const onDragEnd = (result) => {};
 
@@ -19,7 +19,7 @@ const App = () => {
       <div className="App__right">
         <Navbar />
         <DragDropContext onDragEnd={onDragEnd}>
-          <TaskBoard CardList={Boards[board[0]].cardOrder} />
+          <TaskBoard CardList={Boards[boards[0]].cardOrder} />
         </DragDropContext>
       </div>
     </div>

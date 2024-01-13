@@ -4,6 +4,7 @@ import { User } from "react-feather";
 
 import FormInput from './FormInput';
 import SignUpFooter from './SignUpFooter';
+import { Users } from '../../utils/BoardData/Boards';
 
 
 const SignForm = ({ isRegistered, handleButton }) => {
@@ -61,7 +62,24 @@ const SignForm = ({ isRegistered, handleButton }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    navigate('/yourboards');
+    if (isRegistered) {
+      const formData = new FormData(e.target);
+      const entries = Object.fromEntries(formData.entries());
+
+      for (let uid in Users) {
+        const user = Users[uid];
+
+        if (entries.email === user.email && entries.password === user.password) {
+          navigate('/yourboards', { state: user });
+          return;
+        } else {
+          console.log('User not found')
+        }
+      }
+
+
+
+    }
   }
 
   const handleChange = (e) => {
@@ -80,7 +98,7 @@ const SignForm = ({ isRegistered, handleButton }) => {
         </div>
         <div className="inputs">
           {
-            !isRegistered ? (
+            isRegistered ? (
               <>
                 <FormInput {...inputs[1]} handleChange={handleChange} />
                 <FormInput {...inputs[2]} handleChange={handleChange} />
@@ -95,11 +113,11 @@ const SignForm = ({ isRegistered, handleButton }) => {
               )
             )
           }
-          <button>{!isRegistered ? "Sign In" : "Register"}</button>
+          <button>{isRegistered ? "Sign In" : "Register"}</button>
         </div>
         <div className="form-footer">
           {
-            !isRegistered ?
+            isRegistered ?
               <SignUpFooter message={"Don't have an account? "} action={"Register"} handleButton={handleButton} />
               : <SignUpFooter message={"Already have an account? "} action={"Sign In"} handleButton={handleButton} />
           }
