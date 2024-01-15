@@ -11,7 +11,7 @@ import TaskBoard from "./components/TaskBoard/TaskBoard.jsx";
 const App = () => {
   const loc = useLocation();
   const user = loc.state;
-  const [boards, setBoards] = useState(user.boardList);
+  const boards = user.boardList;
 
   const onDragEnd = (result) => {};
 
