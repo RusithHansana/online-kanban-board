@@ -60,11 +60,13 @@ export const Boards = {
     id: "b3",
     name: "Mobile App",
     color: "--highlight-pink",
+    cardOrder: [],
   },
   b4: {
     id: "b4",
     name: "Web App",
     color: "--highlight-blue",
+    cardOrder: [],
   },
 };
 
