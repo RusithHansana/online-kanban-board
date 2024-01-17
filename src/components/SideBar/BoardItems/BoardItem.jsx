@@ -22,13 +22,9 @@ const BoardItem = ({ item, isActive, setActiveId }) => {
 
     };
 
-    const handleClick = (id) => {
-        setActiveId(id);
-    }
-
     return (
         <div className="board-items" style={{ borderLeft: `4px solid var(${item.color})` }}>
-            <button onClick={() => handleClick(item.id)}>
+            <button onClick={() => setActiveId(item.id)}>
                 <li
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}

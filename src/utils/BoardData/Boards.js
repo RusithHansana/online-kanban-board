@@ -74,7 +74,7 @@ export const Users = {
     name: "John",
     email: "John@mail.com",
     password: "john123jh",
-    boardList: ["b1", "b2"],
+    boardList: ["b1", "b2", "b4"],
   },
   u2: {
     id: "u2",

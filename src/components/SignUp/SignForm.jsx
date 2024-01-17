@@ -61,11 +61,10 @@ const SignForm = ({ isRegistered, handleButton }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
+    const entries = Object.fromEntries(formData.entries());
 
     if (isRegistered) {
-      const formData = new FormData(e.target);
-      const entries = Object.fromEntries(formData.entries());
-
       for (let uid in Users) {
         const user = Users[uid];
 
@@ -76,9 +75,24 @@ const SignForm = ({ isRegistered, handleButton }) => {
           console.log('User not found')
         }
       }
+    } else {
 
+      const newUser = {
+        id: "u3",
+        name: entries.username,
+        email: entries.email,
+        password: entries.password,
+        boardList: []
+      }
 
+      const updatedUsers = {
+        ...Users,
+        [newUser.id]: newUser
+      }
 
+      console.log(updatedUsers);
+      navigate('/yourboards', { state: newUser });
+      return;
     }
   }
 

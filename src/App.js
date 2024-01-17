@@ -13,15 +13,19 @@ const App = () => {
   const user = loc.state;
   const boards = user.boardList;
 
+  const [activeId, setActiveId] = useState(boards[0]);
+
   const onDragEnd = (result) => {};
 
   return (
     <div className="App">
-      <Sidebar BoardIds={user.boardList} />
+      <Sidebar BoardIds={boards} />
       <div className="App__right">
         <Navbar />
         <DragDropContext onDragEnd={onDragEnd}>
-          <TaskBoard CardList={Boards[boards[0]].cardOrder} />
+          <TaskBoard
+            CardList={boards.length !== 0 ? Boards[activeId].cardOrder : []}
+          />
         </DragDropContext>
       </div>
     </div>
