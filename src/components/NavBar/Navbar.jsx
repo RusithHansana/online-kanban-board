@@ -9,7 +9,7 @@ const Navbar = ({ activeBoardId }) => {
     const [boardName, setBoardName] = useState('');
 
     useEffect(() => {
-        setBoardName(Boards[activeBoardId].name);
+        activeBoardId ? setBoardName(Boards[activeBoardId].name) : setBoardName('Your Project');
     }, [activeBoardId]);
 
     const handleInputChange = (e) => {

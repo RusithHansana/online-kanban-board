@@ -23,7 +23,7 @@ const Sidebar = ({ BoardIds, activeBoardId, setActiveBoardId }) => {
                                     />
                                 }
                                 )
-                            ) : null
+                            ) : <p>You don't have any projects yet...</p>
                         }
                     </ul>
                 </div>
