@@ -39,7 +39,7 @@ const App = () => {
       {toggleModal ? (
         <>
           <div onClick={setToggleModal} className="overlay"></div>
-          <Modal toggle={setToggleModal} />
+          <Modal toggle={setToggleModal} title={"Create Project"} />
         </>
       ) : null}
     </div>
