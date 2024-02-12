@@ -16,6 +16,7 @@ const App = () => {
 
   const [activeBoardId, setActiveBoardId] = useState(boards[0]);
   const [toggleModal, setToggleModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
 
   const onDragEnd = (result) => {};
 
@@ -27,19 +28,28 @@ const App = () => {
         setActiveBoardId={setActiveBoardId}
       />
       <div className="App__right">
-        <Navbar activeBoardId={activeBoardId} toggle={setToggleModal} />
+        <Navbar
+          activeBoardId={activeBoardId}
+          toggle={setToggleModal}
+          setModalTitle={setModalTitle}
+        />
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard
             CardList={
               boards.length !== 0 ? Boards[activeBoardId].cardOrder : []
             }
+            toggle={setToggleModal}
+            setModalTitle={setModalTitle}
           />
         </DragDropContext>
       </div>
       {toggleModal ? (
         <>
-          <div onClick={setToggleModal} className="overlay"></div>
-          <Modal toggle={setToggleModal} title={"Create Project"} />
+          <div
+            onClick={() => setToggleModal(!toggleModal)}
+            className="overlay"
+          ></div>
+          <Modal toggle={setToggleModal} title={modalTitle} />
         </>
       ) : null}
     </div>

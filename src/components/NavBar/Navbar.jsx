@@ -4,10 +4,14 @@ import { LogOut, PlusCircle } from "react-feather";
 import './Navbar.scss';
 import { Boards } from "../../utils/BoardData/Boards";
 
-const Navbar = ({ activeBoardId, toggle }) => {
+const Navbar = ({ activeBoardId, toggle, setModalTitle }) => {
     const inputRef = useRef();
     const [boardName, setBoardName] = useState('');
 
+    const handleModal = () => {
+        setModalTitle("Create Project");
+        toggle(prevState => !prevState);
+    }
 
     useEffect(() => {
         activeBoardId ? setBoardName(Boards[activeBoardId].name) : setBoardName('Your Project');
@@ -36,7 +40,7 @@ const Navbar = ({ activeBoardId, toggle }) => {
             </div>
             <div className="app__navbar-button">
                 <div className="btn-addboards">
-                    <PlusCircle onClick={toggle} />
+                    <PlusCircle onClick={handleModal} />
                 </div>
                 <div className="btn-logout">
                     <LogOut />

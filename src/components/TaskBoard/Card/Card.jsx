@@ -6,8 +6,13 @@ import Task from '../Task/Task';
 import './Card.scss';
 import { Tasks } from '../../../utils/BoardData/Boards';
 
-const Card = ({ card, index }) => {
+const Card = ({ card, index, toggle, setModalTitle }) => {
     const [enabled, setEnabled] = useState(false);
+
+    const handleModal = () => {
+        setModalTitle("Create Task");
+        toggle(prevState => !prevState);
+    }
 
     useEffect(() => {
         const animation = requestAnimationFrame(() => setEnabled(true));
@@ -73,7 +78,7 @@ const Card = ({ card, index }) => {
                                     ))}
                                     {provided.placeholder}
                                     {
-                                        card.title === 'To do' ? <button className="btn-tasklist"><PlusCircle /></button> : null
+                                        card.title === 'To do' ? <button className="btn-tasklist"><PlusCircle onClick={handleModal} /></button> : null
                                     }
                                 </ul>
                             )
