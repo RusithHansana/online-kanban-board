@@ -4,7 +4,7 @@ import { LogOut, PlusCircle } from "react-feather";
 import './Navbar.scss';
 import { Boards } from "../../utils/BoardData/Boards";
 
-const Navbar = ({ activeBoardId }) => {
+const Navbar = ({ activeBoardId, toggle }) => {
     const inputRef = useRef();
     const [boardName, setBoardName] = useState('');
 
@@ -36,7 +36,7 @@ const Navbar = ({ activeBoardId }) => {
             </div>
             <div className="app__navbar-button">
                 <div className="btn-addboards">
-                    <PlusCircle />
+                    <PlusCircle onClick={toggle} />
                 </div>
                 <div className="btn-logout">
                     <LogOut />

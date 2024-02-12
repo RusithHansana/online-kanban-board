@@ -7,6 +7,7 @@ import { Boards } from "./utils/BoardData/Boards.js";
 import Navbar from "./components/NavBar/Navbar.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
 import TaskBoard from "./components/TaskBoard/TaskBoard.jsx";
+import Modal from "./components/Modal/Modal.jsx";
 
 const App = () => {
   const loc = useLocation();
@@ -14,6 +15,7 @@ const App = () => {
   const boards = user.boardList;
 
   const [activeBoardId, setActiveBoardId] = useState(boards[0]);
+  const [toggleModal, setToggleModal] = useState(false);
 
   const onDragEnd = (result) => {};
 
@@ -25,7 +27,7 @@ const App = () => {
         setActiveBoardId={setActiveBoardId}
       />
       <div className="App__right">
-        <Navbar activeBoardId={activeBoardId} />
+        <Navbar activeBoardId={activeBoardId} toggle={setToggleModal} />
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard
             CardList={
@@ -34,6 +36,12 @@ const App = () => {
           />
         </DragDropContext>
       </div>
+      {toggleModal ? (
+        <>
+          <div onClick={setToggleModal} className="overlay"></div>
+          <Modal toggle={setToggleModal} />
+        </>
+      ) : null}
     </div>
   );
 };
