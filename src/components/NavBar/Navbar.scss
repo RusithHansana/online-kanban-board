@@ -65,7 +65,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    cursor: pointer;
+
     button {
         background-color: var(--primary-color);
         border: none;
@@ -73,6 +74,10 @@
         text-align: center;
         padding: 1rem;
         text-decoration: none;
-        cursor: pointer;
     }
+
+    .btn-logout {
+        margin-left: 30px;
+    }
+
 }

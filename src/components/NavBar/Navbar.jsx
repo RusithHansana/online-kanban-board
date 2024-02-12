@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { LogOut } from "react-feather";
+import { LogOut, PlusCircle } from "react-feather";
 
 import './Navbar.scss';
 import { Boards } from "../../utils/BoardData/Boards";
@@ -8,9 +8,11 @@ const Navbar = ({ activeBoardId }) => {
     const inputRef = useRef();
     const [boardName, setBoardName] = useState('');
 
+
     useEffect(() => {
         activeBoardId ? setBoardName(Boards[activeBoardId].name) : setBoardName('Your Project');
     }, [activeBoardId]);
+
 
     const handleInputChange = (e) => {
         //onKeyDown identifies keyboard events
@@ -33,7 +35,12 @@ const Navbar = ({ activeBoardId }) => {
                     onKeyDown={handleInputChange} />
             </div>
             <div className="app__navbar-button">
-                <LogOut />
+                <div className="btn-addboards">
+                    <PlusCircle />
+                </div>
+                <div className="btn-logout">
+                    <LogOut />
+                </div>
             </div>
         </div>
     );
