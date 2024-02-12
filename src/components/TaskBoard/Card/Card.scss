@@ -41,19 +41,15 @@
 
     .btn-tasklist {
         border: none;
+        background: inherit;
         border-radius: 15px;
-        background: #5f5f5f;
         opacity: 0.75;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 5px;
         margin: 5px;
         cursor: pointer;
 
         svg {
             background: inherit;
-            margin-right: 5px;
+
         }
     }
 }
