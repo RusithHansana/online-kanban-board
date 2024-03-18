@@ -5,10 +5,13 @@ import { User } from "react-feather";
 
 import FormInput from './FormInput';
 import SignUpFooter from './SignUpFooter';
-import { useRegisterMutation } from '../../slices/usersApiSlice.js';
+import { useRegisterMutation, useLoginMutation } from '../../slices/usersApiSlice.js';
 import { setCredentials } from "../../slices/authSlice";
 
 import { toast } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const SignForm = ({ isRegistered, handleButton }) => {
   const [values, setValues] = useState({
@@ -24,6 +27,7 @@ const SignForm = ({ isRegistered, handleButton }) => {
   const { userInfo } = useSelector((state) => state.auth);
 
   const [register, { isLoading }] = useRegisterMutation();
+  const [login] = useLoginMutation();
 
   const inputs = [
     {
@@ -72,12 +76,23 @@ const SignForm = ({ isRegistered, handleButton }) => {
     const formData = new FormData(e.target);
     const { username, email, password } = Object.fromEntries(formData.entries());
 
-    try {
-      const res = await register({ username, email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate("/yourboards");
-    } catch (error) {
-      toast.error(error?.data?.message || error.error)
+    if (!isRegistered) {
+      try {
+        const res = await register({ username, email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate("/yourboards");
+      } catch (error) {
+        toast.error(error?.data?.message || error.error)
+      }
+    } else {
+      try {
+        const res = await login({ email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate("/yourboards");
+      } catch (error) {
+        toast.error(error?.data?.message || error.error)
+      }
+
     }
   }
 
@@ -123,6 +138,7 @@ const SignForm = ({ isRegistered, handleButton }) => {
               : <SignUpFooter message={"Already have an account? "} action={"Sign In"} handleButton={handleButton} />
           }
         </div>
+        <ToastContainer />
       </Form>
     </>
   );
