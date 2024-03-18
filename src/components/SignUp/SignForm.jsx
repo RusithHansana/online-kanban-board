@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Form, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { User } from "react-feather";
 
 import FormInput from './FormInput';
 import SignUpFooter from './SignUpFooter';
-import { Users } from '../../utils/BoardData/Boards';
+import { useRegisterMutation } from '../../slices/usersApiSlice.js';
+import { setCredentials } from "../../slices/authSlice";
 
+import { toast } from 'react-toastify';
 
 const SignForm = ({ isRegistered, handleButton }) => {
   const [values, setValues] = useState({
@@ -16,6 +19,11 @@ const SignForm = ({ isRegistered, handleButton }) => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const [register, { isLoading }] = useRegisterMutation();
 
   const inputs = [
     {
@@ -59,42 +67,21 @@ const SignForm = ({ isRegistered, handleButton }) => {
     },
   ]
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const entries = Object.fromEntries(formData.entries());
+    const { username, email, password } = Object.fromEntries(formData.entries());
 
-    if (isRegistered) {
-      for (let uid in Users) {
-        const user = Users[uid];
-
-        if (entries.email === user.email && entries.password === user.password) {
-          navigate('/yourboards', { state: user });
-          return;
-        } else {
-          console.log('User not found')
-        }
-      }
-    } else {
-
-      const newUser = {
-        id: "u3",
-        name: entries.username,
-        email: entries.email,
-        password: entries.password,
-        boardList: []
-      }
-
-      const updatedUsers = {
-        ...Users,
-        [newUser.id]: newUser
-      }
-
-      console.log(updatedUsers);
-      navigate('/yourboards', { state: newUser });
-      return;
+    try {
+      const res = await register({ username, email, password }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      navigate("/yourboards");
+    } catch (error) {
+      toast.error(error?.data?.message || error.error)
     }
   }
+
+
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value })
