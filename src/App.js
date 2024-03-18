@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useLocation } from "react-router-dom";
 
 import "./App.scss";
-import { Boards } from "./utils/BoardData/Boards.js";
 import Navbar from "./components/NavBar/Navbar.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
 import TaskBoard from "./components/TaskBoard/TaskBoard.jsx";
 import Modal from "./components/Modal/Modal.jsx";
 
 const App = () => {
-  const loc = useLocation();
-  const user = loc.state;
-  const boards = user.boardList;
-
-  const [activeBoardId, setActiveBoardId] = useState(boards[0]);
+  const [activeBoardId, setActiveBoardId] = useState(0);
   const [toggleModal, setToggleModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
 
@@ -23,7 +17,6 @@ const App = () => {
   return (
     <div className="App">
       <Sidebar
-        BoardIds={boards}
         activeBoardId={activeBoardId}
         setActiveBoardId={setActiveBoardId}
       />
@@ -35,9 +28,7 @@ const App = () => {
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard
-            CardList={
-              boards.length !== 0 ? Boards[activeBoardId].cardOrder : []
-            }
+            CardList={[]}
             toggle={setToggleModal}
             setModalTitle={setModalTitle}
           />
