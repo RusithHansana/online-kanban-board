@@ -21,7 +21,7 @@ const App = () => {
   const [getBoards] = useGetBoardsMutation();
 
   const fetchBoardList = async () => {
-    const response = await getBoards({ _id: userInfo._id }).unwrap();
+    const response = await getBoards({ userId: userInfo._id }).unwrap();
     setBoards(response);
   };
 
@@ -44,7 +44,7 @@ const App = () => {
           toggle={setToggleModal}
           setModalTitle={setModalTitle}
         />
-        {/* <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard
             CardList={[]}
             toggle={setToggleModal}
@@ -60,8 +60,7 @@ const App = () => {
           ></div>
           <Modal toggle={setToggleModal} title={modalTitle} />
         </>
-      ) : null} */}
-      </div>
+      ) : null}
     </div>
   );
 };

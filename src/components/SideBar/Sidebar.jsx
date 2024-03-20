@@ -5,9 +5,6 @@ import './Sidebar.scss';
 import BoardItem from "./BoardItems/BoardItem.jsx";
 import Sidemenu from './SideMenu/Sidemenu.jsx';
 
-import { useGetBoardsMutation } from '../../slices/boardsApiSlice.js';
-
-
 const Sidebar = ({ boards, activeBoardId, setActiveBoardId }) => {
 
     return (
