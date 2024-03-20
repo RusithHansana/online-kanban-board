@@ -3,9 +3,8 @@ import { Menu, XSquare } from 'react-feather';
 import { motion } from 'framer-motion';
 
 import './Sidemenu.scss';
-import { Boards } from '../../../utils/BoardData/Boards';
 
-const Sidemenu = ({ BoardIds, setActiveId }) => {
+const Sidemenu = ({ Boards, setActiveId }) => {
     const [toggle, setToggle] = useState(false);
 
     const handleClick = (id) => {
@@ -26,27 +25,26 @@ const Sidemenu = ({ BoardIds, setActiveId }) => {
                         <h1 className="app__sidebar-menu title">Your Boards</h1>
                         <ul className="boards">
                             {
-                                BoardIds.length !== 0 ? (
-                                    BoardIds.map(boardId => {
-                                        const item = Boards[boardId];
+                                Boards.length !== 0 ? (
+                                    Boards.map(board => {
                                         return (
                                             <li
-                                                key={item.id}
-                                                style={{ borderLeft: `4px solid var(${item.color})` }}
-                                                onClick={() => handleClick(item.id)}
+                                                key={board._id}
+                                                style={{ borderLeft: `4px solid var(${board.color})` }}
+                                                onClick={() => handleClick(board._id)}
                                             >
-                                                {item.name}
+                                                {board.boardName}
                                             </li>
                                         )
                                     }
                                     )
-                                ) : null
+                                ) : <p>You don't have any projects yet...</p>
                             }
                         </ul>
                     </motion.div>
                 ) : null
             }
-        </div>
+        </div >
     )
 }
 

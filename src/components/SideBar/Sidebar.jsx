@@ -46,7 +46,7 @@ const Sidebar = ({ BoardIds, activeBoardId, setActiveBoardId }) => {
                     </ul>
                 </div>
             </div>
-            <Sidemenu BoardIds={BoardIds} setActiveId={setActiveBoardId} />
+            <Sidemenu Boards={boards} setActiveId={setActiveBoardId} />
         </div>
     );
 }
