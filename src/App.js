@@ -23,6 +23,7 @@ const App = () => {
   const fetchBoardList = async () => {
     const response = await getBoards({ userId: userInfo._id }).unwrap();
     setBoards(response);
+    setActiveBoardId(response[0]._id);
   };
 
   useEffect(() => {
@@ -30,7 +31,6 @@ const App = () => {
   }, []);
 
   const onDragEnd = (result) => {};
-
   return (
     <div className="App">
       <Sidebar
@@ -46,7 +46,7 @@ const App = () => {
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard
-            CardList={[]}
+            activeBoardId={activeBoardId}
             toggle={setToggleModal}
             setModalTitle={setModalTitle}
           />
