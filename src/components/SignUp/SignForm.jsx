@@ -24,8 +24,6 @@ const SignForm = ({ isRegistered, handleButton }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { userInfo } = useSelector((state) => state.auth);
-
   const [register, { isLoading }] = useRegisterMutation();
   const [login] = useLoginMutation();
 
