@@ -40,7 +40,7 @@ const App = () => {
       />
       <div className="App__right">
         <Navbar
-          activeBoardId={activeBoardId}
+          activeBoard={boards.find((board) => board._id === activeBoardId)}
           toggle={setToggleModal}
           setModalTitle={setModalTitle}
         />

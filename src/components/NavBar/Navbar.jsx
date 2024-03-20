@@ -8,7 +8,7 @@ import { LogOut, PlusCircle } from "react-feather";
 import './Navbar.scss';
 import { Boards } from "../../utils/BoardData/Boards";
 
-const Navbar = ({ activeBoardId, toggle, setModalTitle }) => {
+const Navbar = ({ activeBoard, toggle, setModalTitle }) => {
     const inputRef = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -22,8 +22,8 @@ const Navbar = ({ activeBoardId, toggle, setModalTitle }) => {
     }
 
     useEffect(() => {
-        activeBoardId ? setBoardName(Boards[activeBoardId].name) : setBoardName('Your Project');
-    }, [activeBoardId]);
+        activeBoard ? setBoardName(activeBoard.boardName) : setBoardName('Your Project');
+    }, [activeBoard]);
 
     const logoutHandler = async () => {
         try {
