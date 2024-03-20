@@ -24,13 +24,13 @@ const BoardItem = ({ item, isActive, setActiveId }) => {
 
     return (
         <div className="board-items" style={{ borderLeft: `4px solid var(${item.color})` }}>
-            <button onClick={() => setActiveId(item.id)}>
+            <button onClick={() => setActiveId(item._id)}>
                 <li
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     style={isHovered || isActive ? style : null}
                 >
-                    {item.name}
+                    {item.boardName}
                 </li>
             </button>
         </div>

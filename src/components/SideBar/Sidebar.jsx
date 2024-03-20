@@ -16,8 +16,8 @@ const Sidebar = ({ BoardIds, activeBoardId, setActiveBoardId }) => {
     const [getBoards] = useGetBoardsMutation();
 
     const fetchBoards = async () => {
-        const response = await getBoards(userInfo.id).unwrap();
-        console.log(response);
+        const response = await getBoards({ _id: userInfo._id }).unwrap();
+        setBoards(response);
     }
 
     useEffect(() => {
@@ -31,21 +31,19 @@ const Sidebar = ({ BoardIds, activeBoardId, setActiveBoardId }) => {
             <div className="app__sidebar-bar">
                 <h1 className="app__sidebar-title">Your Boards</h1>
                 <div className="app__sidebar-scroll">
-                    {/* <ul className="boards">
+                    <ul className="boards">
                         {
-                            BoardIds.length !== 0 ? (
-                                BoardIds.map(boardId => {
+                            boards.length !== 0 ?
+                                boards.map(board => {
                                     return <BoardItem
-                                        item={Boards[boardId]}
-                                        key={boardId}
+                                        item={board}
+                                        key={board._id}
                                         setActiveId={setActiveBoardId}
-                                        isActive={boardId === activeBoardId}
+                                        isActive={board._id === activeBoardId}
                                     />
-                                }
-                                )
-                            ) : <p>You don't have any projects yet...</p>
+                                }) : <p>You don't have any projects yet...</p>
                         }
-                    </ul> */}
+                    </ul>
                 </div>
             </div>
             <Sidemenu BoardIds={BoardIds} setActiveId={setActiveBoardId} />

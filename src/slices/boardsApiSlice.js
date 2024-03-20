@@ -7,7 +7,7 @@ export const boardsApiSlice = apiSlice.injectEndpoints({
     getBoards: builder.mutation({
       query: (data) => ({
         url: `${Boards_URL}/`,
-        method: "GET",
+        method: "POST",
         body: data,
       }),
     }),
