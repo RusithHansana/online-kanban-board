@@ -8,23 +8,7 @@ import Sidemenu from './SideMenu/Sidemenu.jsx';
 import { useGetBoardsMutation } from '../../slices/boardsApiSlice.js';
 
 
-const Sidebar = ({ BoardIds, activeBoardId, setActiveBoardId }) => {
-    const [boards, setBoards] = useState([]);
-
-    const userInfo = useSelector((state) => state.auth.userInfo);
-
-    const [getBoards] = useGetBoardsMutation();
-
-    const fetchBoards = async () => {
-        const response = await getBoards({ _id: userInfo._id }).unwrap();
-        setBoards(response);
-    }
-
-    useEffect(() => {
-        fetchBoards();
-    }, []);
-
-
+const Sidebar = ({ boards, activeBoardId, setActiveBoardId }) => {
 
     return (
         <div className="app__sidebar">
