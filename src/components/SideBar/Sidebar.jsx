@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+
 
 import './Sidebar.scss';
 import BoardItem from "./BoardItems/BoardItem.jsx";
 import Sidemenu from './SideMenu/Sidemenu.jsx';
 
-const Sidebar = ({ boards, activeBoardId, setActiveBoardId }) => {
+const Sidebar = ({ boards, activeBoardId, setTaskBoard }) => {
 
     return (
         <div className="app__sidebar">
@@ -19,7 +19,7 @@ const Sidebar = ({ boards, activeBoardId, setActiveBoardId }) => {
                                     return <BoardItem
                                         item={board}
                                         key={board._id}
-                                        setActiveId={setActiveBoardId}
+                                        setActiveId={setTaskBoard}
                                         isActive={board._id === activeBoardId}
                                     />
                                 }) : <p>You don't have any projects yet...</p>
@@ -27,7 +27,7 @@ const Sidebar = ({ boards, activeBoardId, setActiveBoardId }) => {
                     </ul>
                 </div>
             </div>
-            <Sidemenu Boards={boards} setActiveId={setActiveBoardId} />
+            <Sidemenu Boards={boards} setActiveId={setTaskBoard} />
         </div>
     );
 }

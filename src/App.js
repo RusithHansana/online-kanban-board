@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { useGetBoardsMutation } from "./slices/boardsApiSlice.js";
+import { useGetCardsMutation } from "./slices/cardsApiSlice.js";
 
 import "./App.scss";
 import Navbar from "./components/NavBar/Navbar.jsx";
@@ -10,15 +11,21 @@ import TaskBoard from "./components/TaskBoard/TaskBoard.jsx";
 import Modal from "./components/Modal/Modal.jsx";
 
 const App = () => {
-  const [activeBoardId, setActiveBoardId] = useState(0);
+  const [activeBoardId, setActiveBoardId] = useState("");
   const [toggleModal, setToggleModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
 
-  const [boards, setBoards] = useState([]);
-
   const userInfo = useSelector((state) => state.auth.userInfo);
 
+  const [boards, setBoards] = useState([]);
+  const [cards, setCards] = useState([]);
+
   const [getBoards] = useGetBoardsMutation();
+  const [getCards] = useGetCardsMutation();
+
+  useEffect(() => {
+    fetchBoardList();
+  }, []);
 
   const fetchBoardList = async () => {
     const response = await getBoards({ userId: userInfo._id }).unwrap();
@@ -26,9 +33,15 @@ const App = () => {
     setActiveBoardId(response[0]._id);
   };
 
-  useEffect(() => {
-    fetchBoardList();
-  }, []);
+  const fetchCards = async (boardId) => {
+    const response = await getCards({ boardId: activeBoardId }).unwrap();
+    setCards(response);
+  };
+
+  const setTaskBoard = (boardId) => {
+    setActiveBoardId(boardId);
+    fetchCards(boardId);
+  };
 
   const onDragEnd = (result) => {};
   return (
@@ -36,7 +49,7 @@ const App = () => {
       <Sidebar
         boards={boards}
         activeBoardId={activeBoardId}
-        setActiveBoardId={setActiveBoardId}
+        setTaskBoard={setTaskBoard}
       />
       <div className="App__right">
         <Navbar
@@ -46,6 +59,7 @@ const App = () => {
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard
+            cards={cards}
             activeBoardId={activeBoardId}
             toggle={setToggleModal}
             setModalTitle={setModalTitle}
