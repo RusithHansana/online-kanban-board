@@ -10,7 +10,7 @@ const Card = ({ card, index, toggle, setModalTitle }) => {
     const [enabled, setEnabled] = useState(false);
     const [tasks, setTasks] = useState([]);
 
-    const [getTasks, { isLoading }] = useGetTasksMutation();
+    const [getTasks] = useGetTasksMutation();
 
     const fetchTasks = async (cardId) => {
         const response = await getTasks({ cardId: cardId }).unwrap();
