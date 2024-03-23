@@ -12,12 +12,11 @@ const TaskBoard = ({ activeBoardId, toggle, setModalTitle }) => {
   const [enabled, setEnabled] = useState(false);
   const [cards, setCards] = useState([]);
 
-  const [getCards, { isLoading }] = useGetCardsMutation();
+  const [getCards] = useGetCardsMutation();
 
   const fetchCards = async (boardId) => {
     const response = await getCards({ boardId: boardId }).unwrap();
     setCards(response);
-    console.log(response);
   };
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));

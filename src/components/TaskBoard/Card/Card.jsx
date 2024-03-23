@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { useGetTasksMutation } from '../../../slices/tasksApiSlice.js';
 import { PlusCircle } from 'react-feather'
 
 import Task from '../Task/Task';
@@ -7,6 +8,14 @@ import './Card.scss';
 
 const Card = ({ card, index, toggle, setModalTitle }) => {
     const [enabled, setEnabled] = useState(false);
+    const [tasks, setTasks] = useState([]);
+
+    const [getTasks, { isLoading }] = useGetTasksMutation();
+
+    const fetchTasks = async (cardId) => {
+        const response = await getTasks({ cardId: cardId }).unwrap();
+        setTasks(response);
+    }
 
     const handleModal = () => {
         setModalTitle("Create Task");
@@ -15,12 +24,12 @@ const Card = ({ card, index, toggle, setModalTitle }) => {
 
     useEffect(() => {
         const animation = requestAnimationFrame(() => setEnabled(true));
-
+        fetchTasks(card._id);
         return () => {
             cancelAnimationFrame(animation);
             setEnabled(false);
         };
-    }, []);
+    }, [card._id]);
 
     if (!enabled) {
         return null;
@@ -54,30 +63,31 @@ const Card = ({ card, index, toggle, setModalTitle }) => {
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                 >
-                                    {/* {card((taskId, index) => (
-                                        <Draggable
-                                            draggableId={taskId}
-                                            index={index}
-                                            type="task"
-                                            key={taskId}
-                                        >
-                                            {
-                                                (provided) => (
-                                                    <li
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                        ref={provided.innerRef}
-                                                    >
-                                                        Tasks
-                                                    </li>
-                                                )
-                                            }
-                                        </Draggable>
+                                    {
+                                        tasks.map((task, index) => (
+                                            <Draggable
+                                                draggableId={task._id}
+                                                index={index}
+                                                type="task"
+                                                key={task._id}
+                                            >
+                                                {
+                                                    (provided) => (
+                                                        <li
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                            ref={provided.innerRef}
+                                                        >
+                                                            <Task task={task} toggle={toggle} setModalTitle={setModalTitle} />
+                                                        </li>
+                                                    )
+                                                }
+                                            </Draggable>
 
-                                    ))} */}
+                                        ))}
                                     {provided.placeholder}
                                     {
-                                        card.title === 'To do' ? <button className="btn-tasklist"><PlusCircle onClick={handleModal} /></button> : null
+                                        card.cardName === 'Todo' ? <button className="btn-tasklist"><PlusCircle onClick={handleModal} /></button> : null
                                     }
                                 </ul>
                             )
