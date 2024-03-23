@@ -21,11 +21,7 @@ const App = () => {
   const [cards, setCards] = useState([]);
 
   const [getBoards] = useGetBoardsMutation();
-  const [getCards] = useGetCardsMutation();
-
-  useEffect(() => {
-    fetchBoardList();
-  }, []);
+  const [getCards, { isLoading }] = useGetCardsMutation();
 
   const fetchBoardList = async () => {
     const response = await getBoards({ userId: userInfo._id }).unwrap();
@@ -34,7 +30,7 @@ const App = () => {
   };
 
   const fetchCards = async (boardId) => {
-    const response = await getCards({ boardId: activeBoardId }).unwrap();
+    const response = await getCards({ boardId: boardId }).unwrap();
     setCards(response);
   };
 
@@ -44,6 +40,12 @@ const App = () => {
   };
 
   const onDragEnd = (result) => {};
+
+  useEffect(() => {
+    fetchBoardList();
+    fetchCards(activeBoardId);
+  }, []);
+
   return (
     <div className="App">
       <Sidebar

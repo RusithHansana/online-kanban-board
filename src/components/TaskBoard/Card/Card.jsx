@@ -54,7 +54,7 @@ const Card = ({ card, index, toggle, setModalTitle }) => {
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                 >
-                                    {card.taskOrder.map((taskId, index) => (
+                                    {/* {card((taskId, index) => (
                                         <Draggable
                                             draggableId={taskId}
                                             index={index}
@@ -74,7 +74,7 @@ const Card = ({ card, index, toggle, setModalTitle }) => {
                                             }
                                         </Draggable>
 
-                                    ))}
+                                    ))} */}
                                     {provided.placeholder}
                                     {
                                         card.title === 'To do' ? <button className="btn-tasklist"><PlusCircle onClick={handleModal} /></button> : null

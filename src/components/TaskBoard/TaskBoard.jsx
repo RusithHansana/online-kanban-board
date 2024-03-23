@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import { useGetCardsMutation } from '../../slices/cardsApiSlice';
 
 import Card from './Card/Card';
 import './TaskBoard.scss';
 
 
-const TaskBoard = ({ cards, activeBoardId, toggle, setModalTitle }) => {
+const TaskBoard = ({ activeBoardId, toggle, setModalTitle }) => {
   //react-beautiful-dnd does not work with strict mode  console.log(CardList);
   //this is the way to bypass it
   const [enabled, setEnabled] = useState(false);
+  const [cards, setCards] = useState([]);
 
+  const [getCards, { isLoading }] = useGetCardsMutation();
+
+  const fetchCards = async (boardId) => {
+    const response = await getCards({ boardId: boardId }).unwrap();
+    setCards(response);
+    console.log(response);
+  };
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
+    fetchCards(activeBoardId);
+
 
     return () => {
       cancelAnimationFrame(animation);
       setEnabled(false);
     };
-  }, []);
+  }, [activeBoardId]);
 
   if (!enabled) {
     return null;
   }
-
   return (
     <Droppable
       droppableId="all"
@@ -37,22 +47,21 @@ const TaskBoard = ({ cards, activeBoardId, toggle, setModalTitle }) => {
           >
             <ul className="app__taskboard-cards">
               {
-                cards.length === 0 ? (
+                cards.length !== 0 ? (
 
                   cards.map((card, index) => (
                     <li key={card._id}>
-                      {console.log(card)}
-                      {/* <Card card={card} index={index} toggle={toggle} setModalTitle={setModalTitle} /> */}
+                      <Card card={card} index={index} toggle={toggle} setModalTitle={setModalTitle} />
                     </li>
                   ))
-                ) : <p>Loading...</p>
+                ) : <p>No Cards Yet</p>
               }
               {provided.placeholder}
             </ul>
           </div>
         )
       }
-    </Droppable>
+    </Droppable >
   );
 }
 
