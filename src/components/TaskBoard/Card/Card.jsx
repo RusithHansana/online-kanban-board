@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useGetTasksMutation } from '../../../slices/tasksApiSlice.js';
+import { useAddTasksMutation, useGetTasksMutation } from '../../../slices/tasksApiSlice.js';
 import { Plus } from 'react-feather'
 
 import Task from '../Task/Task';
@@ -10,16 +10,29 @@ import './Card.scss';
 const Card = ({ card, index }) => {
     const [enabled, setEnabled] = useState(false);
     const [tasks, setTasks] = useState([]);
+    const [newTask, setNewTask] = useState("");
 
     const [getTasks] = useGetTasksMutation();
+    const [addTasks] = useAddTasksMutation();
 
     const fetchTasks = async (cardId) => {
         const response = await getTasks({ cardId: cardId }).unwrap();
         setTasks(response);
     }
 
-    const handleAddTask = () => {
-        console.log('Add task');
+    const handleAddTask = async (e) => {
+        if (e.key === 'Enter' || e.type === 'click') {
+            try {
+                const response = await addTasks({ task: newTask, cardId: card._id }).unwrap();
+                console.log('succsess');
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+    const handleTaskInput = (e) => {
+        setNewTask(e.target.value);
     }
 
     useEffect(() => {
@@ -88,7 +101,12 @@ const Card = ({ card, index }) => {
                                     {provided.placeholder}
                                     <div className='addtask'>
                                         <Plus className='addbtn' onClick={handleAddTask} />
-                                        <input type='text' placeholder='Add new task' />
+                                        <input
+                                            type='text'
+                                            placeholder='Add new task'
+                                            onChange={handleTaskInput}
+                                            onKeyDown={handleAddTask}
+                                        />
                                     </div>
                                 </ul>
                             )
