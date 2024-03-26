@@ -4,15 +4,16 @@ import { useSelector } from "react-redux";
 import { useGetBoardsMutation } from "./slices/boardsApiSlice.js";
 import { useGetCardsMutation } from "./slices/cardsApiSlice.js";
 
-import "./App.scss";
 import Navbar from "./components/NavBar/Navbar.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
 import TaskBoard from "./components/TaskBoard/TaskBoard.jsx";
 import Modal from "./components/Modal/Modal.jsx";
+import "./App.scss";
 
 const App = () => {
   const [activeBoardId, setActiveBoardId] = useState("");
-  const [toggleModal, setToggleModal] = useState(false);
+  const [toggleProjectModal, setToggleProjectModal] = useState(false);
+  const [toggleTaskModal, setToggleTaskModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
 
   const userInfo = useSelector((state) => state.auth.userInfo);
@@ -26,7 +27,6 @@ const App = () => {
   const fetchBoardList = async () => {
     const response = await getBoards({ userId: userInfo._id }).unwrap();
     setBoards(response);
-    setActiveBoardId(response[0]._id);
   };
 
   const fetchCards = async (boardId) => {
@@ -44,7 +44,7 @@ const App = () => {
   useEffect(() => {
     fetchBoardList();
     fetchCards(activeBoardId);
-  }, []);
+  }, [boards]);
 
   return (
     <div className="App">
@@ -56,25 +56,25 @@ const App = () => {
       <div className="App__right">
         <Navbar
           activeBoard={boards.find((board) => board._id === activeBoardId)}
-          toggle={setToggleModal}
+          toggle={setToggleProjectModal}
           setModalTitle={setModalTitle}
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard
             cards={cards}
             activeBoardId={activeBoardId}
-            toggle={setToggleModal}
+            toggle={setToggleTaskModal}
             setModalTitle={setModalTitle}
           />
         </DragDropContext>
       </div>
-      {toggleModal ? (
+      {toggleProjectModal ? (
         <>
           <div
-            onClick={() => setToggleModal(!toggleModal)}
+            onClick={() => setToggleProjectModal(!toggleProjectModal)}
             className="overlay"
           ></div>
-          <Modal toggle={setToggleModal} title={modalTitle} />
+          <Modal toggle={setToggleProjectModal} title={modalTitle} />
         </>
       ) : null}
     </div>

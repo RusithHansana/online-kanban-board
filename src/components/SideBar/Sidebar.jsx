@@ -1,9 +1,9 @@
 import React from 'react';
+import BoardItem from "./BoardItems/BoardItem.jsx";
+import Sidemenu from './SideMenu/Sidemenu.jsx';
 
 
 import './Sidebar.scss';
-import BoardItem from "./BoardItems/BoardItem.jsx";
-import Sidemenu from './SideMenu/Sidemenu.jsx';
 
 const Sidebar = ({ boards, activeBoardId, setTaskBoard }) => {
 

@@ -6,7 +6,6 @@ import { logout } from "../../slices/authSlice";
 import { LogOut, PlusCircle } from "react-feather";
 
 import './Navbar.scss';
-import { Boards } from "../../utils/BoardData/Boards";
 
 const Navbar = ({ activeBoard, toggle, setModalTitle }) => {
     const inputRef = useRef();

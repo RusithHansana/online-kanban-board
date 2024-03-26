@@ -11,7 +11,7 @@ export const boardsApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    add: builder.mutation({
+    addBoards: builder.mutation({
       query: (data) => ({
         url: `${Boards_URL}/add`,
         method: "POST",
@@ -42,7 +42,7 @@ export const boardsApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetBoardsMutation,
-  useAddMutation,
+  useAddBoardsMutation,
   useUpdateBoardMutation,
   useDeleteBoardMutation,
   useDeleteAllBoardsMutation,
