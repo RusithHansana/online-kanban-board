@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useGetTasksMutation } from '../../../slices/tasksApiSlice.js';
-import { PlusCircle } from 'react-feather'
+import { Plus } from 'react-feather'
 
 import Task from '../Task/Task';
 import './Card.scss';
+
 
 const Card = ({ card, index }) => {
     const [enabled, setEnabled] = useState(false);
@@ -15,6 +16,10 @@ const Card = ({ card, index }) => {
     const fetchTasks = async (cardId) => {
         const response = await getTasks({ cardId: cardId }).unwrap();
         setTasks(response);
+    }
+
+    const handleAddTask = () => {
+        console.log('Add task');
     }
 
     useEffect(() => {
@@ -81,6 +86,10 @@ const Card = ({ card, index }) => {
 
                                         ))}
                                     {provided.placeholder}
+                                    <div className='addtask'>
+                                        <Plus className='addbtn' onClick={handleAddTask} />
+                                        <input type='text' placeholder='Add new task' />
+                                    </div>
                                 </ul>
                             )
                         }
