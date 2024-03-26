@@ -6,7 +6,7 @@ import Card from './Card/Card';
 import './TaskBoard.scss';
 
 
-const TaskBoard = ({ activeBoardId, toggle, setModalTitle }) => {
+const TaskBoard = ({ activeBoardId, toggle }) => {
   //react-beautiful-dnd does not work with strict mode  console.log(CardList);
   //this is the way to bypass it
   const [enabled, setEnabled] = useState(false);
@@ -50,7 +50,7 @@ const TaskBoard = ({ activeBoardId, toggle, setModalTitle }) => {
 
                   cards.map((card, index) => (
                     <li key={card._id}>
-                      <Card card={card} index={index} toggle={toggle} setModalTitle={setModalTitle} />
+                      <Card card={card} index={index} />
                     </li>
                   ))
                 ) : <p>No Cards Yet</p>

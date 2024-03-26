@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { X } from 'react-feather';
 
-import { useAddBoardsMutation } from '../../../slices/boardsApiSlice.js';
+import { useAddBoardsMutation } from '../../slices/boardsApiSlice.js';
 
-import '../Modal.scss';
+import './Modal.scss';
 
 const Projectmodal = ({ toggle }) => {
     const [selected, setSelected] = useState(0);

@@ -13,7 +13,6 @@ import "./App.scss";
 const App = () => {
   const [activeBoardId, setActiveBoardId] = useState("");
   const [toggleProjectModal, setToggleProjectModal] = useState(false);
-  const [toggleTaskModal, setToggleTaskModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
 
   const userInfo = useSelector((state) => state.auth.userInfo);
@@ -63,7 +62,6 @@ const App = () => {
           <TaskBoard
             cards={cards}
             activeBoardId={activeBoardId}
-            toggle={setToggleTaskModal}
             setModalTitle={setModalTitle}
           />
         </DragDropContext>

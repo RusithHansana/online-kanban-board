@@ -6,7 +6,7 @@ import { PlusCircle } from 'react-feather'
 import Task from '../Task/Task';
 import './Card.scss';
 
-const Card = ({ card, index, toggle, setModalTitle }) => {
+const Card = ({ card, index }) => {
     const [enabled, setEnabled] = useState(false);
     const [tasks, setTasks] = useState([]);
 
@@ -15,11 +15,6 @@ const Card = ({ card, index, toggle, setModalTitle }) => {
     const fetchTasks = async (cardId) => {
         const response = await getTasks({ cardId: cardId }).unwrap();
         setTasks(response);
-    }
-
-    const handleModal = () => {
-        setModalTitle("Create Task");
-        toggle(prevState => !prevState);
     }
 
     useEffect(() => {
@@ -78,7 +73,7 @@ const Card = ({ card, index, toggle, setModalTitle }) => {
                                                             {...provided.dragHandleProps}
                                                             ref={provided.innerRef}
                                                         >
-                                                            <Task task={task} toggle={toggle} setModalTitle={setModalTitle} />
+                                                            <Task task={task} />
                                                         </li>
                                                     )
                                                 }
@@ -86,9 +81,6 @@ const Card = ({ card, index, toggle, setModalTitle }) => {
 
                                         ))}
                                     {provided.placeholder}
-                                    {
-                                        card.cardName === 'Todo' ? <button className="btn-tasklist"><PlusCircle onClick={handleModal} /></button> : null
-                                    }
                                 </ul>
                             )
                         }
