@@ -5,6 +5,7 @@ import { Plus } from 'react-feather'
 
 import Task from '../Task/Task';
 import './Card.scss';
+import { toast } from 'react-toastify';
 
 
 const Card = ({ card, index }) => {
@@ -21,14 +22,16 @@ const Card = ({ card, index }) => {
     }
 
     const handleAddTask = async (e) => {
+        if (newTask === "") return;
+
         if (e.key === 'Enter' || e.type === 'click') {
             try {
                 const response = await addTasks({ task: newTask, cardId: card._id }).unwrap();
                 setTasks([...tasks, response]);
                 e.target.value = "";
-                console.log('succsess');
+                toast.success('Task added successfully');
             } catch (error) {
-                console.log(error);
+                toast.error('Failed to add task');
             }
         }
     }

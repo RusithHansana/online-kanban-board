@@ -5,6 +5,7 @@ import { useGetCardsMutation, useAddCardsMutation } from '../../slices/cardsApiS
 import Card from './Card/Card';
 import { Plus } from 'react-feather';
 import './TaskBoard.scss';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const TaskBoard = ({ activeBoardId }) => {
@@ -27,14 +28,16 @@ const TaskBoard = ({ activeBoardId }) => {
   }
 
   const handleAddCard = async (e) => {
+    if (newCard === "") return;
+
     if (e.key === 'Enter' || e.type === 'click') {
       try {
         const response = await addCards({ cardName: newCard, boardId: activeBoardId }).unwrap();
         setCards([...cards, response]);
         e.target.value = "";
-        console.log('succsess');
+        toast.success('Card added successfully');
       } catch (error) {
-        console.log(error);
+        toast.error("Failed to add card");
       }
     }
   }
@@ -86,9 +89,11 @@ const TaskBoard = ({ activeBoardId }) => {
                 />
               </div>
             </ul>
+            <ToastContainer />
           </div>
         )
       }
+
     </Droppable >
   );
 }
