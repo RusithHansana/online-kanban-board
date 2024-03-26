@@ -1,23 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import { useGetCardsMutation } from '../../slices/cardsApiSlice';
+import { useGetCardsMutation, useAddCardsMutation } from '../../slices/cardsApiSlice';
 
 import Card from './Card/Card';
+import { Plus } from 'react-feather';
 import './TaskBoard.scss';
 
 
-const TaskBoard = ({ activeBoardId, toggle }) => {
+const TaskBoard = ({ activeBoardId }) => {
   //react-beautiful-dnd does not work with strict mode  console.log(CardList);
   //this is the way to bypass it
   const [enabled, setEnabled] = useState(false);
   const [cards, setCards] = useState([]);
+  const [newCard, setNewCard] = useState("");
 
   const [getCards] = useGetCardsMutation();
+  const [addCards] = useAddCardsMutation();
 
   const fetchCards = async (boardId) => {
     const response = await getCards({ boardId: boardId }).unwrap();
     setCards(response);
   };
+
+  const handleCardInput = (e) => {
+    setNewCard(e.target.value);
+  }
+
+  const handleAddCard = async (e) => {
+    if (e.key === 'Enter' || e.type === 'click') {
+      try {
+        const response = await addCards({ cardName: newCard, boardId: activeBoardId }).unwrap();
+        setCards([...cards, response]);
+        e.target.value = "";
+        console.log('succsess');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
     fetchCards(activeBoardId);
@@ -27,7 +47,7 @@ const TaskBoard = ({ activeBoardId, toggle }) => {
       cancelAnimationFrame(animation);
       setEnabled(false);
     };
-  }, [activeBoardId]);
+  }, [activeBoardId,]);
 
   if (!enabled) {
     return null;
@@ -53,9 +73,18 @@ const TaskBoard = ({ activeBoardId, toggle }) => {
                       <Card card={card} index={index} />
                     </li>
                   ))
-                ) : <p>No Cards Yet</p>
+                ) : <p>You have no cards yet...</p>
               }
               {provided.placeholder}
+              <div className='addtask card'>
+                <Plus className='addbtn' onClick={handleAddCard} />
+                <input
+                  type='text'
+                  placeholder='Add new Card'
+                  onChange={handleCardInput}
+                  onKeyDown={handleAddCard}
+                />
+              </div>
             </ul>
           </div>
         )

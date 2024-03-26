@@ -24,6 +24,8 @@ const Card = ({ card, index }) => {
         if (e.key === 'Enter' || e.type === 'click') {
             try {
                 const response = await addTasks({ task: newTask, cardId: card._id }).unwrap();
+                setTasks([...tasks, response]);
+                e.target.value = "";
                 console.log('succsess');
             } catch (error) {
                 console.log(error);
