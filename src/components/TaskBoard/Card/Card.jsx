@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAddTasksMutation, useGetTasksMutation } from '../../../slices/tasksApiSlice.js';
-import { useDeleteCardMutation } from '../../../slices/cardsApiSlice.js';
 import { Plus, Trash2 } from 'react-feather'
 
 import Task from '../Task/Task';
@@ -9,14 +8,13 @@ import './Card.scss';
 import { toast } from 'react-toastify';
 
 
-const Card = ({ card, index }) => {
+const Card = ({ card, index, handleCardDelete }) => {
     const [enabled, setEnabled] = useState(false);
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState("");
 
     const [getTasks] = useGetTasksMutation();
     const [addTasks] = useAddTasksMutation();
-    const [deleteCard] = useDeleteCardMutation();
 
     const fetchTasks = async (cardId) => {
         const response = await getTasks({ cardId: cardId }).unwrap();
@@ -38,13 +36,8 @@ const Card = ({ card, index }) => {
         }
     }
 
-    const handleCardDelete = async () => {
-        try {
-            const response = await deleteCard({ cardId: card._id }).unwrap();
-            toast.success('Card deleted successfully');
-        } catch (error) {
-            toast.error('Failed to delete card');
-        }
+    const deteleCard = () => {
+        handleCardDelete(card._id);
     }
 
     const handleTaskInput = (e) => {
@@ -82,7 +75,7 @@ const Card = ({ card, index }) => {
                         >
                             {card.cardName}
                         </h1>
-                        <Trash2 onClick={handleCardDelete} />
+                        <Trash2 onClick={() => deteleCard()} />
                     </div>
                     <Droppable
                         droppableId={card._id}

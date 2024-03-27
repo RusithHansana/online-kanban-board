@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import { useGetCardsMutation, useAddCardsMutation } from '../../slices/cardsApiSlice';
+import { useDeleteCardMutation } from '../../slices/cardsApiSlice.js';
 
 import Card from './Card/Card';
 import { Plus } from 'react-feather';
@@ -17,6 +18,7 @@ const TaskBoard = ({ activeBoardId }) => {
 
   const [getCards] = useGetCardsMutation();
   const [addCards] = useAddCardsMutation();
+  const [deleteCard] = useDeleteCardMutation();
 
   const fetchCards = async (boardId) => {
     const response = await getCards({ boardId: boardId }).unwrap();
@@ -41,6 +43,17 @@ const TaskBoard = ({ activeBoardId }) => {
       }
     }
   }
+
+  const handleCardDelete = async (cardId) => {
+    try {
+      const response = await deleteCard({ cardId }).unwrap();
+      setCards([...cards.filter(card => card._id !== cardId)]);
+      toast.success('Card deleted successfully');
+    } catch (error) {
+      toast.error('Failed to delete card');
+    }
+  }
+
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
     fetchCards(activeBoardId);
@@ -73,7 +86,7 @@ const TaskBoard = ({ activeBoardId }) => {
 
                   cards.map((card, index) => (
                     <li key={card._id}>
-                      <Card card={card} index={index} />
+                      <Card card={card} index={index} handleCardDelete={handleCardDelete} />
                     </li>
                   ))
                 ) : <p>You have no cards yet...</p>

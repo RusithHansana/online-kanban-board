@@ -84,7 +84,6 @@ const App = () => {
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard
-            cards={cards}
             activeBoardId={activeBoardId}
             setModalTitle={setModalTitle}
           />
