@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useGetBoardsMutation } from "./slices/boardsApiSlice.js";
 import { useGetCardsMutation } from "./slices/cardsApiSlice.js";
 import { useAddBoardsMutation } from "./slices/boardsApiSlice.js";
+
 import { toast } from "react-toastify";
 
 import Navbar from "./components/NavBar/Navbar.jsx";
@@ -63,6 +64,7 @@ const App = () => {
   const onDragEnd = (result) => {};
 
   useEffect(() => {
+    console.log("use");
     fetchBoardList();
     boards.length !== 0 && setTaskBoard(boards[0]?._id);
   }, [boards.length]);

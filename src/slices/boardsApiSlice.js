@@ -25,7 +25,7 @@ export const boardsApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     deleteBoard: builder.mutation({
-      query: ({ data }) => ({
+      query: (data) => ({
         url: `${Boards_URL}/delete`,
         method: "DELETE",
         body: data,
