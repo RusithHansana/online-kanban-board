@@ -43,7 +43,7 @@ const App = () => {
   useEffect(() => {
     fetchBoardList();
     fetchCards(activeBoardId);
-  }, [boards]);
+  }, []);
 
   return (
     <div className="App">
@@ -72,7 +72,11 @@ const App = () => {
             onClick={() => setToggleProjectModal(!toggleProjectModal)}
             className="overlay"
           ></div>
-          <Modal toggle={setToggleProjectModal} title={modalTitle} />
+          <Modal
+            toggle={setToggleProjectModal}
+            userId={userInfo._id}
+            title={modalTitle}
+          />
         </>
       ) : null}
     </div>

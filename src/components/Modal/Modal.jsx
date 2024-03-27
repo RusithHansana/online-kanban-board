@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { toast } from "react-toastify";
+import { useAddBoardsMutation } from "../../slices/boardsApiSlice.js";
+
 import { X } from 'react-feather';
 
-import { useAddBoardsMutation } from '../../slices/boardsApiSlice.js';
+
 
 import './Modal.scss';
 
-const Projectmodal = ({ toggle }) => {
+const Projectmodal = ({ toggle, userId }) => {
     const [selected, setSelected] = useState(0);
     const [boardName, setBoardName] = useState("");
 
-    const userInfo = useSelector((state) => state.auth.userInfo);
-
+    const [addBoards] = useAddBoardsMutation();
 
     const colors = [
         "--highlight-green",
@@ -21,22 +22,29 @@ const Projectmodal = ({ toggle }) => {
         "--highlight-blue"
     ]
 
-    const [addBoards] = useAddBoardsMutation();
+
 
     const handleInputChange = (e) => {
         setBoardName(e.target.value);
     }
 
     const handleAddProjectButton = async () => {
+        if (!boardName) {
+            toast.error("Please enter project name");
+            return;
+        }
         try {
-            const response = await addBoards({ boardName, color: colors[selected], userId: userInfo._id });
-            console.log('Success');
+            const response = await addBoards({
+                boardName,
+                color: colors[selected],
+                userId
+            });
+            toast.success("Project added successfully");
             toggle();
         } catch (error) {
-            console.log(error);
+            toast.error("Failed to add project");
         }
-
-    }
+    };
 
     return (
         <div className="modal">
