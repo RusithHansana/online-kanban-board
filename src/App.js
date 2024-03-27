@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
+
 import { useSelector } from "react-redux";
 import { useGetBoardsMutation } from "./slices/boardsApiSlice.js";
 import { useGetCardsMutation } from "./slices/cardsApiSlice.js";
@@ -64,7 +65,6 @@ const App = () => {
   useEffect(() => {
     fetchBoardList();
     boards.length !== 0 && setTaskBoard(boards[0]?._id);
-    console.log("use");
   }, [boards.length]);
 
   return (
@@ -79,6 +79,7 @@ const App = () => {
           activeBoard={boards.find((board) => board._id === activeBoardId)}
           toggle={setToggleProjectModal}
           setModalTitle={setModalTitle}
+          userInfo={userInfo}
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBoard

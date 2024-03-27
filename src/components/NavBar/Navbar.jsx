@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../slices/usersApiSlice.js";
 import { logout } from "../../slices/authSlice";
-import { LogOut, PlusCircle } from "react-feather";
+import { LogOut, Plus, Trash2 } from "react-feather";
 
 import './Navbar.scss';
 
-const Navbar = ({ activeBoard, toggle, setModalTitle }) => {
+const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo }) => {
     const inputRef = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -47,16 +47,22 @@ const Navbar = ({ activeBoard, toggle, setModalTitle }) => {
     }
     return (
         <div className="app__navbar">
-            <div className="app__navbar-input">
+            <div className="app__navbar-left">
                 <input
                     ref={inputRef}
                     type="text"
                     placeholder={boardName}
                     onKeyDown={handleInputChange} />
+                <div className="btn-header">
+                    <Plus onClick={handleModal} />
+                </div>
+                <div className="btn-header">
+                    <Trash2 />
+                </div>
             </div>
-            <div className="app__navbar-button">
-                <div className="btn-addboards">
-                    <PlusCircle onClick={handleModal} />
+            <div className="app__navbar-right">
+                <div className="userinfo">
+                    {userInfo.username}
                 </div>
                 <div className="btn-logout">
                     <LogOut onClick={logoutHandler} />
