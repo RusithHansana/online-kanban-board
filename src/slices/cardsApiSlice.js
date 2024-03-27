@@ -25,7 +25,7 @@ export const cardsApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     deleteCard: builder.mutation({
-      query: ({ data }) => ({
+      query: (data) => ({
         url: `${Cards_URL}/delete`,
         method: "DELETE",
         body: data,

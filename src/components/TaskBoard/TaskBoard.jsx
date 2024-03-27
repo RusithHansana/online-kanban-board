@@ -50,7 +50,7 @@ const TaskBoard = ({ activeBoardId }) => {
       cancelAnimationFrame(animation);
       setEnabled(false);
     };
-  }, [activeBoardId,]);
+  }, [activeBoardId]);
 
   if (!enabled) {
     return null;

@@ -64,7 +64,6 @@ const App = () => {
   const onDragEnd = (result) => {};
 
   useEffect(() => {
-    console.log("use");
     fetchBoardList();
     boards.length !== 0 && setTaskBoard(boards[0]?._id);
   }, [boards.length]);
