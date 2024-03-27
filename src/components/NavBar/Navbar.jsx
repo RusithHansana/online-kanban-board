@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { useLogoutMutation } from "../../slices/usersApiSlice.js";
+import { useDeleteBoardMutation } from "../../slices/boardsApiSlice.js";
+
 import { logout } from "../../slices/authSlice";
 import { LogOut, Plus, Trash2 } from "react-feather";
+import { toast } from "react-toastify";
 
 import './Navbar.scss';
 
@@ -14,6 +18,7 @@ const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo }) => {
     const [boardName, setBoardName] = useState('');
 
     const [logoutApiCall] = useLogoutMutation();
+    const [deleteBoard] = useDeleteBoardMutation();
 
     const handleModal = () => {
         setModalTitle("Create Project");
@@ -31,6 +36,15 @@ const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo }) => {
             navigate("/");
         } catch (err) {
             console.log(err);
+        }
+    }
+
+    const handleDeleteBoard = async () => {
+        try {
+            const response = await deleteBoard({ boardId: activeBoard._id }).unwrap();
+            toast.success("Project deleted successfully");
+        } catch (error) {
+            toast.error("Failed to delete project");
         }
     }
 
@@ -57,7 +71,7 @@ const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo }) => {
                     <Plus onClick={handleModal} />
                 </div>
                 <div className="btn-header">
-                    <Trash2 />
+                    <Trash2 onClick={handleDeleteBoard} />
                 </div>
             </div>
             <div className="app__navbar-right">
