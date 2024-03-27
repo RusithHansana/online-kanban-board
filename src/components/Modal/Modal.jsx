@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { toast } from "react-toastify";
-import { useAddBoardsMutation } from "../../slices/boardsApiSlice.js";
 
 import { X } from 'react-feather';
 
@@ -8,11 +6,11 @@ import { X } from 'react-feather';
 
 import './Modal.scss';
 
-const Projectmodal = ({ toggle, userId }) => {
+const Projectmodal = ({ toggle, handleAddProjectButton }) => {
     const [selected, setSelected] = useState(0);
     const [boardName, setBoardName] = useState("");
 
-    const [addBoards] = useAddBoardsMutation();
+
 
     const colors = [
         "--highlight-green",
@@ -28,23 +26,10 @@ const Projectmodal = ({ toggle, userId }) => {
         setBoardName(e.target.value);
     }
 
-    const handleAddProjectButton = async () => {
-        if (!boardName) {
-            toast.error("Please enter project name");
-            return;
-        }
-        try {
-            const response = await addBoards({
-                boardName,
-                color: colors[selected],
-                userId
-            });
-            toast.success("Project added successfully");
-            toggle();
-        } catch (error) {
-            toast.error("Failed to add project");
-        }
-    };
+    const handleAddButton = () => {
+        handleAddProjectButton(boardName, colors[selected]);
+        toggle();
+    }
 
     return (
         <div className="modal">
@@ -69,7 +54,7 @@ const Projectmodal = ({ toggle, userId }) => {
 
                 </div>
                 <div className="form-end">
-                    <button className="form-submit" onClick={handleAddProjectButton}>Create</button>
+                    <button className="form-submit" onClick={handleAddButton}>Create</button>
                 </div>
             </div>
         </div>

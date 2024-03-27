@@ -3,6 +3,8 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { useGetBoardsMutation } from "./slices/boardsApiSlice.js";
 import { useGetCardsMutation } from "./slices/cardsApiSlice.js";
+import { useAddBoardsMutation } from "./slices/boardsApiSlice.js";
+import { toast } from "react-toastify";
 
 import Navbar from "./components/NavBar/Navbar.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
@@ -20,8 +22,9 @@ const App = () => {
   const [boards, setBoards] = useState([]);
   const [cards, setCards] = useState([]);
 
-  const [getBoards] = useGetBoardsMutation();
-  const [getCards, { isLoading }] = useGetCardsMutation();
+  const [getBoards, { isLoading }] = useGetBoardsMutation();
+  const [getCards] = useGetCardsMutation();
+  const [addBoards] = useAddBoardsMutation();
 
   const fetchBoardList = async () => {
     const response = await getBoards({ userId: userInfo._id }).unwrap();
@@ -38,12 +41,31 @@ const App = () => {
     fetchCards(boardId);
   };
 
+  const handleAddProjectButton = async (boardName, color) => {
+    if (!boardName) {
+      toast.error("Please enter project name");
+      return;
+    }
+    try {
+      const response = await addBoards({
+        boardName,
+        color,
+        userId: userInfo._id,
+      });
+      setBoards([...boards, response]);
+      toast.success("Project added successfully");
+    } catch (error) {
+      toast.error("Failed to add project");
+    }
+  };
+
   const onDragEnd = (result) => {};
 
   useEffect(() => {
     fetchBoardList();
-    fetchCards(activeBoardId);
-  }, []);
+    boards.length !== 0 && setTaskBoard(boards[0]?._id);
+    console.log("use");
+  }, [boards.length]);
 
   return (
     <div className="App">
@@ -74,7 +96,7 @@ const App = () => {
           ></div>
           <Modal
             toggle={setToggleProjectModal}
-            userId={userInfo._id}
+            handleAddProjectButton={handleAddProjectButton}
             title={modalTitle}
           />
         </>
