@@ -3,31 +3,25 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../slices/usersApiSlice.js";
-import { useDeleteBoardMutation } from "../../slices/boardsApiSlice.js";
 
 import { logout } from "../../slices/authSlice";
 import { LogOut, Plus, Trash2 } from "react-feather";
-import { toast } from "react-toastify";
 
 import './Navbar.scss';
 
-const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo }) => {
+const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo, handleDeleteBoard }) => {
     const inputRef = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [boardName, setBoardName] = useState('');
 
     const [logoutApiCall] = useLogoutMutation();
-    const [deleteBoard] = useDeleteBoardMutation();
 
     const handleModal = () => {
         setModalTitle("Create Project");
         toggle(prevState => !prevState);
     }
 
-    useEffect(() => {
-        activeBoard ? setBoardName(activeBoard.boardName) : setBoardName('Your Project');
-    }, [activeBoard]);
 
     const logoutHandler = async () => {
         try {
@@ -39,13 +33,8 @@ const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo }) => {
         }
     }
 
-    const handleDeleteBoard = async () => {
-        try {
-            const response = await deleteBoard({ boardId: activeBoard._id }).unwrap();
-            toast.success("Project deleted successfully");
-        } catch (error) {
-            toast.error("Failed to delete project");
-        }
+    const deleteBoard = () => {
+        handleDeleteBoard(activeBoard._id);
     }
 
     const handleInputChange = (e) => {
@@ -59,6 +48,11 @@ const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo }) => {
             inputRef.current.value = '';
         }
     }
+
+    useEffect(() => {
+        activeBoard ? setBoardName(activeBoard.boardName) : setBoardName('Your Project');
+    }, [activeBoard]);
+
     return (
         <div className="app__navbar">
             <div className="app__navbar-left">
@@ -71,7 +65,7 @@ const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo }) => {
                     <Plus onClick={handleModal} />
                 </div>
                 <div className="btn-header">
-                    <Trash2 onClick={handleDeleteBoard} />
+                    <Trash2 onClick={deleteBoard} />
                 </div>
             </div>
             <div className="app__navbar-right">

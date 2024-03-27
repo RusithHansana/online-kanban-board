@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import { useGetBoardsMutation } from "./slices/boardsApiSlice.js";
 import { useGetCardsMutation } from "./slices/cardsApiSlice.js";
 import { useAddBoardsMutation } from "./slices/boardsApiSlice.js";
+import { useDeleteBoardMutation } from "./slices/boardsApiSlice.js";
 
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import Navbar from "./components/NavBar/Navbar.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
@@ -27,6 +28,7 @@ const App = () => {
   const [getBoards, { isLoading }] = useGetBoardsMutation();
   const [getCards] = useGetCardsMutation();
   const [addBoards] = useAddBoardsMutation();
+  const [deleteBoard] = useDeleteBoardMutation();
 
   const fetchBoardList = async () => {
     const response = await getBoards({ userId: userInfo._id }).unwrap();
@@ -55,9 +57,17 @@ const App = () => {
         userId: userInfo._id,
       });
       setBoards([...boards, response]);
-      toast.success("Project added successfully");
     } catch (error) {
       toast.error("Failed to add project");
+    }
+  };
+
+  const handleDeleteBoard = async () => {
+    try {
+      const response = await deleteBoard({ boardId: activeBoardId }).unwrap();
+      setBoards([...boards.filter((board) => board._id !== activeBoardId)]);
+    } catch (error) {
+      toast.error("Failed to delete project");
     }
   };
 
@@ -80,6 +90,7 @@ const App = () => {
           activeBoard={boards.find((board) => board._id === activeBoardId)}
           toggle={setToggleProjectModal}
           setModalTitle={setModalTitle}
+          handleDeleteBoard={handleDeleteBoard}
           userInfo={userInfo}
         />
         <DragDropContext onDragEnd={onDragEnd}>
@@ -102,6 +113,7 @@ const App = () => {
           />
         </>
       ) : null}
+      <ToastContainer />
     </div>
   );
 };

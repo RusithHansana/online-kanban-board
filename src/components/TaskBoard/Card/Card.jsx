@@ -29,7 +29,6 @@ const Card = ({ card, index, handleCardDelete }) => {
                 const response = await addTasks({ task: newTask, cardId: card._id }).unwrap();
                 setTasks([...tasks, response]);
                 e.target.value = "";
-                toast.success('Task added successfully');
             } catch (error) {
                 toast.error('Failed to add task');
             }
