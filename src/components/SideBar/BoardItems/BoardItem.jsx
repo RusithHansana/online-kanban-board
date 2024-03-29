@@ -18,7 +18,7 @@ const BoardItem = ({ item, isActive, setActiveId }) => {
         color: 'var(--secondary-color)',
         borderRadius: '10px',
         padding: '1rem',
-        scale: '1.1'
+
 
     };
 
