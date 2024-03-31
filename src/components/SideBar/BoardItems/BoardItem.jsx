@@ -1,8 +1,12 @@
 import { React, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveBoardId } from "../../../slices/state/boardSlice.js";
 import './BoardItem.scss';
 
-const BoardItem = ({ item, isActive, setActiveId }) => {
+const BoardItem = ({ board }) => {
+    const dispatch = useDispatch();
+    const activeId = useSelector((state) => state.boards.activeBoardId);
+
     const [isHovered, setHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -13,22 +17,26 @@ const BoardItem = ({ item, isActive, setActiveId }) => {
         setHovered(false);
     };
 
+    const handleBtnClick = () => {
+        dispatch(setActiveBoardId(board._id));
+    }
+
     let style = {
-        background: `var(${item.color})`,
+        background: `var(${board.color})`,
         color: 'var(--secondary-color)',
         borderRadius: '10px',
         padding: '1rem',
     };
 
     return (
-        <div className="board-items" style={{ borderLeft: `4px solid var(${item.color})` }}>
-            <button onClick={() => setActiveId(item._id)}>
+        <div className="board-items" style={{ borderLeft: `4px solid var(${board.color})` }}>
+            <button onClick={handleBtnClick}>
                 <li
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    style={isHovered || isActive ? style : null}
+                    style={isHovered || (activeId === board._id) ? style : null}
                 >
-                    {item.boardName}
+                    {board.boardName}
                 </li>
             </button>
         </div>

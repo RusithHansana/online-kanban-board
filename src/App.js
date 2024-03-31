@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { useSelector } from "react-redux";
-import { useGetBoardsMutation } from "./slices/api/boardsApiSlice.js";
-import { useGetCardsMutation } from "./slices/api/cardsApiSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetBoardsQuery } from "./slices/api/boardsApiSlice.js";
 import { useAddBoardsMutation } from "./slices/api/boardsApiSlice.js";
 import { useDeleteBoardMutation } from "./slices/api/boardsApiSlice.js";
 
@@ -21,17 +20,11 @@ const App = () => {
   const [modalTitle, setModalTitle] = useState("");
 
   const userInfo = useSelector((state) => state.auth.userInfo);
+  const { data: boards, isLoading } = useGetBoardsQuery(userInfo._id);
 
-  const [boards, setBoards] = useState([]);
-
-  const [getBoards, { isLoading }] = useGetBoardsMutation();
+  // const [getBoards, { isLoading }] = useGetBoardsQuery();
   const [addBoards] = useAddBoardsMutation();
   const [deleteBoard] = useDeleteBoardMutation();
-
-  const fetchBoardList = async () => {
-    const response = await getBoards({ userId: userInfo._id }).unwrap();
-    setBoards(response);
-  };
 
   const setTaskBoard = (boardId) => {
     setActiveBoardId(boardId);
@@ -48,7 +41,6 @@ const App = () => {
         color,
         userId: userInfo._id,
       });
-      setBoards([...boards, response]);
     } catch (error) {
       toast.error("Failed to add project");
     }
@@ -57,7 +49,6 @@ const App = () => {
   const handleDeleteBoard = async () => {
     try {
       const response = await deleteBoard({ boardId: activeBoardId }).unwrap();
-      setBoards([...boards.filter((board) => board._id !== activeBoardId)]);
     } catch (error) {
       toast.error("Failed to delete project");
     }
@@ -68,48 +59,45 @@ const App = () => {
     const { destination, source, draggableId, type } = result;
   };
 
-  useEffect(() => {
-    fetchBoardList();
-    boards.length !== 0 && setTaskBoard(boards[0]?._id);
-  }, [boards.length]);
-
   return (
-    <div className="App">
-      <Sidebar
-        boards={boards}
-        activeBoardId={activeBoardId}
-        setTaskBoard={setTaskBoard}
-      />
-      <div className="App__right">
-        <Navbar
-          activeBoard={boards.find((board) => board._id === activeBoardId)}
-          toggle={setToggleProjectModal}
-          setModalTitle={setModalTitle}
-          handleDeleteBoard={handleDeleteBoard}
-          userInfo={userInfo}
+    !isLoading && (
+      <div className="App">
+        <Sidebar
+          boards={boards}
+          activeBoardId={activeBoardId}
+          setTaskBoard={setTaskBoard}
         />
-        <DragDropContext onDragEnd={onDragEnd}>
-          <TaskBoard
-            activeBoardId={activeBoardId}
-            setModalTitle={setModalTitle}
-          />
-        </DragDropContext>
-      </div>
-      {toggleProjectModal ? (
-        <>
-          <div
-            onClick={() => setToggleProjectModal(!toggleProjectModal)}
-            className="overlay"
-          ></div>
-          <Modal
+        <div className="App__right">
+          <Navbar
+            activeBoard={boards.find((board) => board._id === activeBoardId)}
             toggle={setToggleProjectModal}
-            handleAddProjectButton={handleAddProjectButton}
-            title={modalTitle}
+            setModalTitle={setModalTitle}
+            handleDeleteBoard={handleDeleteBoard}
+            userInfo={userInfo}
           />
-        </>
-      ) : null}
-      <ToastContainer />
-    </div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <TaskBoard
+              activeBoardId={activeBoardId}
+              setModalTitle={setModalTitle}
+            />
+          </DragDropContext>
+        </div>
+        {toggleProjectModal ? (
+          <>
+            <div
+              onClick={() => setToggleProjectModal(!toggleProjectModal)}
+              className="overlay"
+            ></div>
+            <Modal
+              toggle={setToggleProjectModal}
+              handleAddProjectButton={handleAddProjectButton}
+              title={modalTitle}
+            />
+          </>
+        ) : null}
+        <ToastContainer />
+      </div>
+    )
   );
 };
 

@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Menu, XSquare } from 'react-feather';
 import { motion } from 'framer-motion';
 
 import './Sidemenu.scss';
+import { setActiveBoardId } from '../../../slices/state/boardSlice';
 
-const Sidemenu = ({ Boards, setActiveId }) => {
+const Sidemenu = ({ boards, }) => {
+    const dispatch = useDispatch();
     const [toggle, setToggle] = useState(false);
 
-    const handleClick = (id) => {
-        setActiveId(id);
-        setToggle(false);
+    const handleBtnClick = (boardId) => {
+        dispatch(setActiveBoardId(boardId));
     }
 
     return (
@@ -25,13 +27,13 @@ const Sidemenu = ({ Boards, setActiveId }) => {
                         <h1 className="app__sidebar-menu title">Your Boards</h1>
                         <ul className="boards">
                             {
-                                Boards.length !== 0 ? (
-                                    Boards.map(board => {
+                                boards.length !== 0 ? (
+                                    boards.map(board => {
                                         return (
                                             <li
                                                 key={board._id}
                                                 style={{ borderLeft: `4px solid var(${board.color})` }}
-                                                onClick={() => handleClick(board._id)}
+                                                onClick={handleBtnClick(board._id)}
                                             >
                                                 {board.boardName}
                                             </li>

@@ -1,33 +1,39 @@
 // boardsGlobalStateSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [];
+const initialState = {
+  boardList: [],
+  activeBoardId: "",
+};
 
 const boardsSlice = createSlice({
   name: "boards",
   initialState,
   reducers: {
     setBoards: (state, action) => {
-      state.boards = action.payload;
+      state.boardList = action.payload;
     },
     addBoard: (state, action) => {
-      state.boards.push(action.payload);
+      state.boardList.push(action.payload);
     },
     updateBoard: (state, action) => {
-      const index = state.boards.findIndex(
+      const index = state.boardList.findIndex(
         (board) => board._id === action.payload._id
       );
       if (index !== -1) {
-        state.boards[index] = action.payload;
+        state.boardList[index] = action.payload;
       }
     },
     deleteBoard: (state, action) => {
-      state.boards = state.boards.filter(
+      state.boardList = state.boardList.filter(
         (board) => board._id !== action.payload._id
       );
     },
     deleteAllBoards: (state) => {
-      state.boards = [];
+      state.boardList = [];
+    },
+    setActiveBoardId: (state, action) => {
+      state.activeBoardId = action.payload;
     },
   },
 });
@@ -38,5 +44,6 @@ export const {
   updateBoard,
   deleteBoard,
   deleteAllBoards,
+  setActiveBoardId,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

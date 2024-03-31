@@ -1,14 +1,14 @@
 import { apiSlice } from "./apiSlice";
+import { setBoards } from "../state/boardSlice.js";
 
 const Boards_URL = "http://localhost:5000/api/boards";
 
 export const boardsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBoards: builder.mutation({
+    getBoards: builder.query({
       query: (data) => ({
-        url: `${Boards_URL}/`,
-        method: "POST",
-        body: data,
+        url: `${Boards_URL}/?userId=${data}`,
+        method: "GET",
       }),
     }),
     addBoards: builder.mutation({
@@ -41,7 +41,7 @@ export const boardsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetBoardsMutation,
+  useGetBoardsQuery,
   useAddBoardsMutation,
   useUpdateBoardMutation,
   useDeleteBoardMutation,
