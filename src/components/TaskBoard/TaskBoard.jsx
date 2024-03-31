@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import { useGetCardsMutation, useAddCardsMutation } from '../../slices/cardsApiSlice';
-import { useDeleteCardMutation } from '../../slices/cardsApiSlice.js';
+import { useGetCardsMutation, useAddCardsMutation } from '../../slices/api/cardsApiSlice.js';
+import { useDeleteCardMutation } from '../../slices/api/cardsApiSlice.js';
 
 import Card from './Card/Card';
 import { Plus } from 'react-feather';

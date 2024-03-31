@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useAddTasksMutation, useGetTasksMutation } from '../../../slices/tasksApiSlice.js';
+import { useAddTasksMutation, useGetTasksMutation } from '../../../slices/api/tasksApiSlice.js';
 import { Plus, Trash2 } from 'react-feather'
 
 import Task from '../Task/Task';

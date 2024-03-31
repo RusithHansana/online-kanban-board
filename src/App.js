@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import { useSelector } from "react-redux";
-import { useGetBoardsMutation } from "./slices/boardsApiSlice.js";
-import { useGetCardsMutation } from "./slices/cardsApiSlice.js";
-import { useAddBoardsMutation } from "./slices/boardsApiSlice.js";
-import { useDeleteBoardMutation } from "./slices/boardsApiSlice.js";
+import { useGetBoardsMutation } from "./slices/api/boardsApiSlice.js";
+import { useGetCardsMutation } from "./slices/api/cardsApiSlice.js";
+import { useAddBoardsMutation } from "./slices/api/boardsApiSlice.js";
+import { useDeleteBoardMutation } from "./slices/api/boardsApiSlice.js";
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -23,10 +23,8 @@ const App = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
 
   const [boards, setBoards] = useState([]);
-  const [cards, setCards] = useState([]);
 
   const [getBoards, { isLoading }] = useGetBoardsMutation();
-  const [getCards] = useGetCardsMutation();
   const [addBoards] = useAddBoardsMutation();
   const [deleteBoard] = useDeleteBoardMutation();
 
@@ -35,14 +33,8 @@ const App = () => {
     setBoards(response);
   };
 
-  const fetchCards = async (boardId) => {
-    const response = await getCards({ boardId: boardId }).unwrap();
-    setCards(response);
-  };
-
   const setTaskBoard = (boardId) => {
     setActiveBoardId(boardId);
-    fetchCards(boardId);
   };
 
   const handleAddProjectButton = async (boardName, color) => {
@@ -71,7 +63,10 @@ const App = () => {
     }
   };
 
-  const onDragEnd = (result) => {};
+  const onDragEnd = (result) => {
+    console.log(result);
+    const { destination, source, draggableId, type } = result;
+  };
 
   useEffect(() => {
     fetchBoardList();

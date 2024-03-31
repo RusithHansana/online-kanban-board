@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { useLogoutMutation } from "../../slices/usersApiSlice.js";
+import { useLogoutMutation } from "../../slices/api/usersApiSlice.js";
 
-import { logout } from "../../slices/authSlice";
+import { logout } from "../../slices/state/authSlice.js";
 import { LogOut, Plus, Trash2 } from "react-feather";
 
 import './Navbar.scss';
