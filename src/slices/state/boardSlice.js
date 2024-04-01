@@ -11,6 +11,7 @@ const boardsSlice = createSlice({
   initialState,
   reducers: {
     setBoards: (state, action) => {
+      console.log(action);
       state.boardList = action.payload;
     },
     addBoard: (state, action) => {

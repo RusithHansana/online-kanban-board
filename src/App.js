@@ -3,10 +3,9 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useGetBoardsQuery } from "./slices/api/boardsApiSlice.js";
-import { useAddBoardsMutation } from "./slices/api/boardsApiSlice.js";
-import { useDeleteBoardMutation } from "./slices/api/boardsApiSlice.js";
+import { setBoards } from "./slices/state/boardSlice.js";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import Header from "./components/Header/Header.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
@@ -15,49 +14,28 @@ import Modal from "./components/Modal/Modal.jsx";
 import "./App.scss";
 
 const App = () => {
-  const [activeBoardId, setActiveBoardId] = useState("");
-  const [toggleProjectModal, setToggleProjectModal] = useState(false);
-  const [modalTitle, setModalTitle] = useState("");
-
   const userInfo = useSelector((state) => state.auth.userInfo);
-  const { data: boards, isLoading } = useGetBoardsQuery(userInfo._id);
+  const activeBoardId = useSelector((state) => state.boards.activeBoardId);
+  const boardList = useSelector((state) => state.boards.boardList);
 
-  // const [getBoards, { isLoading }] = useGetBoardsQuery();
-  const [addBoards] = useAddBoardsMutation();
-  const [deleteBoard] = useDeleteBoardMutation();
+  const dispatch = useDispatch();
 
-  const setTaskBoard = (boardId) => {
-    setActiveBoardId(boardId);
-  };
+  const [toggleProjectModal, setToggleProjectModal] = useState(false);
 
-  const handleAddProjectButton = async (boardName, color) => {
-    if (!boardName) {
-      toast.error("Please enter project name");
-      return;
-    }
-    try {
-      const response = await addBoards({
-        boardName,
-        color,
-        userId: userInfo._id,
-      });
-    } catch (error) {
-      toast.error("Failed to add project");
-    }
-  };
-
-  const handleDeleteBoard = async () => {
-    try {
-      const response = await deleteBoard({ boardId: activeBoardId }).unwrap();
-    } catch (error) {
-      toast.error("Failed to delete project");
-    }
-  };
+  const {
+    data: boards,
+    isLoading,
+    isSuccess,
+  } = useGetBoardsQuery(userInfo._id);
 
   const onDragEnd = (result) => {
     console.log(result);
     const { destination, source, draggableId, type } = result;
   };
+
+  useEffect(() => {
+    isSuccess && dispatch(setBoards(boards));
+  }, [isSuccess]);
 
   return (
     !isLoading && (
@@ -67,15 +45,10 @@ const App = () => {
           <Header
             activeBoard={boards.find((board) => board._id === activeBoardId)}
             toggle={setToggleProjectModal}
-            setModalTitle={setModalTitle}
-            handleDeleteBoard={handleDeleteBoard}
-            userInfo={userInfo}
+            userName={userInfo.userName}
           />
           <DragDropContext onDragEnd={onDragEnd}>
-            <TaskBoard
-              activeBoardId={activeBoardId}
-              setModalTitle={setModalTitle}
-            />
+            <TaskBoard activeBoardId={activeBoardId} />
           </DragDropContext>
         </div>
         {toggleProjectModal ? (
@@ -84,11 +57,7 @@ const App = () => {
               onClick={() => setToggleProjectModal(!toggleProjectModal)}
               className="overlay"
             ></div>
-            <Modal
-              toggle={setToggleProjectModal}
-              handleAddProjectButton={handleAddProjectButton}
-              title={modalTitle}
-            />
+            <Modal toggle={setToggleProjectModal} />
           </>
         ) : null}
         <ToastContainer />

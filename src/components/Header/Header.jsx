@@ -3,25 +3,25 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../slices/api/usersApiSlice.js";
-
+import { useDeleteBoardMutation } from "../../slices/api/boardsApiSlice.js";
 import { logout } from "../../slices/state/authSlice.js";
 import { LogOut, Plus, Trash2 } from "react-feather";
+import { toast } from "react-toastify";
 
 import './Header.scss';
 
-const Header = ({ activeBoard, toggle, setModalTitle, userInfo, handleDeleteBoard }) => {
+const Header = ({ activeBoard, userName, toggle }) => {
     const inputRef = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [boardName, setBoardName] = useState('');
 
     const [logoutApiCall] = useLogoutMutation();
+    const [deleteBoard] = useDeleteBoardMutation();
 
     const handleModal = () => {
-        setModalTitle("Create Project");
         toggle(prevState => !prevState);
     }
-
 
     const logoutHandler = async () => {
         try {
@@ -33,8 +33,16 @@ const Header = ({ activeBoard, toggle, setModalTitle, userInfo, handleDeleteBoar
         }
     }
 
-    const deleteBoard = () => {
-        handleDeleteBoard(activeBoard._id);
+    const handleDeleteBoard = async () => {
+        try {
+            const response = await deleteBoard({ boardId: activeBoard._id }).unwrap();
+        } catch (error) {
+            toast.error("Failed to delete project");
+        }
+    };
+
+    const handleBtnDelete = () => {
+        handleDeleteBoard();
     }
 
     const handleInputChange = (e) => {
@@ -65,12 +73,12 @@ const Header = ({ activeBoard, toggle, setModalTitle, userInfo, handleDeleteBoar
                     <Plus onClick={handleModal} />
                 </div>
                 <div className="btn-header">
-                    <Trash2 onClick={deleteBoard} />
+                    <Trash2 onClick={handleBtnDelete} />
                 </div>
             </div>
             <div className="app__navbar-right">
                 <div className="userinfo">
-                    {userInfo.username}
+                    {userName}
                 </div>
                 <div className="btn-logout">
                     <LogOut onClick={logoutHandler} />

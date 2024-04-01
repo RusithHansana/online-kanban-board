@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useAddBoardsMutation } from '../../slices/api/boardsApiSlice.js';
+import { addBoard } from '../../slices/state/boardSlice.js';
 
 import { X } from 'react-feather';
-
-
+import { toast } from 'react-toastify';
 
 import './Modal.scss';
 
-const Projectmodal = ({ toggle, handleAddProjectButton }) => {
+const Projectmodal = ({ toggle }) => {
+    const userInfo = useSelector((state) => state.auth.userInfo);
+
+    const dispatch = useDispatch();
+
+    const [addBoards] = useAddBoardsMutation();
+
     const [selected, setSelected] = useState(0);
     const [boardName, setBoardName] = useState("");
-
-
 
     const colors = [
         "--highlight-green",
@@ -20,11 +26,27 @@ const Projectmodal = ({ toggle, handleAddProjectButton }) => {
         "--highlight-blue"
     ]
 
-
-
     const handleInputChange = (e) => {
         setBoardName(e.target.value);
     }
+
+    const handleAddProjectButton = async (boardName, color) => {
+        if (!boardName) {
+            toast.error("Please enter project name");
+            return;
+        }
+
+        try {
+            const response = await addBoards({
+                boardName,
+                color,
+                userId: userInfo._id,
+            });
+            dispatch(addBoard(response));
+        } catch (error) {
+            toast.error("Failed to add project");
+        }
+    };
 
     const handleAddButton = () => {
         handleAddProjectButton(boardName, colors[selected]);
