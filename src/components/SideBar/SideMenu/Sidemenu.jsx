@@ -18,7 +18,7 @@ const Sidemenu = ({ boards, }) => {
         <div className="app__sidebar-menu">
             <Menu onClick={() => setToggle(true)} />
             {
-                toggle ? (
+                toggle && (
                     <motion.div
                         whileInView={{ x: [-10, 0] }}
                         transition={{ duration: 0.85, ease: 'easeOut' }}
@@ -44,7 +44,7 @@ const Sidemenu = ({ boards, }) => {
                             }
                         </ul>
                     </motion.div>
-                ) : null
+                )
             }
         </div >
     )

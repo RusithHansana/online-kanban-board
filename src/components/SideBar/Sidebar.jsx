@@ -19,7 +19,6 @@ const Sidebar = () => {
         }
     }, [boards]);
 
-    //TODO: Lift the state of the sidemenu to this component
     return (
         <div className="app__sidebar">
             <div className="app__sidebar-bar">
