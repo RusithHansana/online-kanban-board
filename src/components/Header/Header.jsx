@@ -3,7 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../slices/api/usersApiSlice.js";
-import { useDeleteBoardMutation } from "../../slices/api/boardsApiSlice.js";
+import { useUpdateBoardMutation, useDeleteBoardMutation } from "../../slices/api/boardsApiSlice.js";
+import { delBoard } from "../../slices/state/boardSlice.js";
+
 import { logout } from "../../slices/state/authSlice.js";
 import { LogOut, Plus, Trash2 } from "react-feather";
 import { toast } from "react-toastify";
@@ -17,6 +19,7 @@ const Header = ({ activeBoard, userName, toggle }) => {
     const [boardName, setBoardName] = useState('');
 
     const [logoutApiCall] = useLogoutMutation();
+    const [updateBoard] = useUpdateBoardMutation();
     const [deleteBoard] = useDeleteBoardMutation();
 
     const handleModal = () => {
@@ -36,6 +39,7 @@ const Header = ({ activeBoard, userName, toggle }) => {
     const handleDeleteBoard = async () => {
         try {
             const response = await deleteBoard({ boardId: activeBoard._id }).unwrap();
+            response && dispatch(delBoard({ boardId: activeBoard._id }));
         } catch (error) {
             toast.error("Failed to delete project");
         }
@@ -45,13 +49,20 @@ const Header = ({ activeBoard, userName, toggle }) => {
         handleDeleteBoard();
     }
 
+    const updateBoardData = async (boardName) => {
+        try {
+            const response = await updateBoard({ boardId: activeBoard._id, boardName }).unwrap();
+        } catch (error) {
+            toast.error("Failed to update project");
+        }
+    }
+
     const handleInputChange = (e) => {
         //onKeyDown identifies keyboard events
         if (e.key === 'Enter') {
             setBoardName(e.target.value);
             //update the boardname in the backend
-
-
+            updateBoardData(e.target.value);
             //clearing the input field after entering the value
             inputRef.current.value = '';
         }
