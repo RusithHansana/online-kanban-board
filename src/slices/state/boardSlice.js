@@ -11,11 +11,11 @@ const boardsSlice = createSlice({
   initialState,
   reducers: {
     setBoards: (state, action) => {
-      console.log(action);
       state.boardList = action.payload;
     },
     addBoard: (state, action) => {
-      state.boardList.push(action.payload);
+      //do not update the existing state, create a new state
+      state.boardList = [...state.boardList, action.payload.data];
     },
     updateBoard: (state, action) => {
       const index = state.boardList.findIndex(
@@ -26,9 +26,10 @@ const boardsSlice = createSlice({
       }
     },
     deleteBoard: (state, action) => {
-      state.boardList = state.boardList.filter(
-        (board) => board._id !== action.payload._id
-      );
+      state.boardList = [
+        ...state.boardList,
+        state.boardList.filter((board) => board._id !== action.payload._id),
+      ];
     },
     deleteAllBoards: (state) => {
       state.boardList = [];

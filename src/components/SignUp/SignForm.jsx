@@ -5,7 +5,7 @@ import { User } from "react-feather";
 
 import FormInput from './FormInput';
 import SignUpFooter from './SignUpFooter';
-import { useRegisterMutation, useLoginMutation } from '../../slices/usersApiSlice.js';
+import { useRegisterMutation, useLoginMutation } from '../../slices/api/usersApiSlice.js';
 import { setCredentials } from "../../slices/state/authSlice";
 
 import { toast } from 'react-toastify';

@@ -43,7 +43,7 @@ const App = () => {
         <Sidebar />
         <div className="App__right">
           <Header
-            activeBoard={boards.find((board) => board._id === activeBoardId)}
+            activeBoard={boardList.find((board) => board._id === activeBoardId)}
             toggle={setToggleProjectModal}
             userName={userInfo.userName}
           />

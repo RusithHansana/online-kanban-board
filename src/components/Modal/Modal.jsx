@@ -42,7 +42,7 @@ const Projectmodal = ({ toggle }) => {
                 color,
                 userId: userInfo._id,
             });
-            dispatch(addBoard(response));
+            response && dispatch(addBoard(response));
         } catch (error) {
             toast.error("Failed to add project");
         }

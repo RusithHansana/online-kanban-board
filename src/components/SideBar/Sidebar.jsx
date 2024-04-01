@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveBoardId } from '../../slices/state/boardSlice.js';
+
 import BoardItem from "./BoardItems/BoardItem.jsx";
 import Sidemenu from './SideMenu/Sidemenu.jsx';
 
 import './Sidebar.scss';
 
 const Sidebar = () => {
-    const boards = useSelector(state => state.boards.boardList);
     const dispatch = useDispatch();
+    const boards = useSelector(state => state.boards.boardList);
 
     useEffect(() => {
         if (boards && boards.length !== 0) {
