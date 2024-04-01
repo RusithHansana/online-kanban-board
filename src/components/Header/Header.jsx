@@ -7,9 +7,9 @@ import { useLogoutMutation } from "../../slices/api/usersApiSlice.js";
 import { logout } from "../../slices/state/authSlice.js";
 import { LogOut, Plus, Trash2 } from "react-feather";
 
-import './Navbar.scss';
+import './Header.scss';
 
-const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo, handleDeleteBoard }) => {
+const Header = ({ activeBoard, toggle, setModalTitle, userInfo, handleDeleteBoard }) => {
     const inputRef = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -80,4 +80,4 @@ const Navbar = ({ activeBoard, toggle, setModalTitle, userInfo, handleDeleteBoar
     );
 }
 
-export default Navbar;
+export default Header;

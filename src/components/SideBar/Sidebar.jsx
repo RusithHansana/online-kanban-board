@@ -7,7 +7,7 @@ import Sidemenu from './SideMenu/Sidemenu.jsx';
 
 import './Sidebar.scss';
 
-const Sidebar = ({ activeBoardId, setTaskBoard }) => {
+const Sidebar = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
 
     const { data: boards } = useGetBoardsQuery(userInfo._id);

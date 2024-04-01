@@ -8,7 +8,7 @@ import { useDeleteBoardMutation } from "./slices/api/boardsApiSlice.js";
 
 import { ToastContainer, toast } from "react-toastify";
 
-import Navbar from "./components/NavBar/Navbar.jsx";
+import Header from "./components/Header/Header.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
 import TaskBoard from "./components/TaskBoard/TaskBoard.jsx";
 import Modal from "./components/Modal/Modal.jsx";
@@ -62,13 +62,9 @@ const App = () => {
   return (
     !isLoading && (
       <div className="App">
-        <Sidebar
-          boards={boards}
-          activeBoardId={activeBoardId}
-          setTaskBoard={setTaskBoard}
-        />
+        <Sidebar />
         <div className="App__right">
-          <Navbar
+          <Header
             activeBoard={boards.find((board) => board._id === activeBoardId)}
             toggle={setToggleProjectModal}
             setModalTitle={setModalTitle}
