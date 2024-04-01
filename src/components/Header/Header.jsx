@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../slices/api/usersApiSlice.js";
 import { useUpdateBoardMutation, useDeleteBoardMutation } from "../../slices/api/boardsApiSlice.js";
-import { delBoard } from "../../slices/state/boardSlice.js";
+import { delBoard, update } from "../../slices/state/boardSlice.js";
 
 import { logout } from "../../slices/state/authSlice.js";
 import { LogOut, Plus, Trash2 } from "react-feather";
@@ -52,6 +52,7 @@ const Header = ({ activeBoard, userName, toggle }) => {
     const updateBoardData = async (boardName) => {
         try {
             const response = await updateBoard({ boardId: activeBoard._id, boardName }).unwrap();
+            response && dispatch(update({ boardId: activeBoard._id, data: response }));
         } catch (error) {
             toast.error("Failed to update project");
         }

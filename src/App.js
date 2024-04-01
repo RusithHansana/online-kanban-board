@@ -45,7 +45,7 @@ const App = () => {
           <Header
             activeBoard={boardList.find((board) => board._id === activeBoardId)}
             toggle={setToggleProjectModal}
-            userName={userInfo.userName}
+            userName={userInfo.username}
           />
           <DragDropContext onDragEnd={onDragEnd}>
             <TaskBoard activeBoardId={activeBoardId} />

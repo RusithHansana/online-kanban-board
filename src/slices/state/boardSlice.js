@@ -17,6 +17,14 @@ const boardsSlice = createSlice({
       //do not update the existing state, create a new state
       state.boardList = [...state.boardList, action.payload.data];
     },
+    update: (state, action) => {
+      const index = state.boardList.findIndex(
+        (board) => board._id === action.payload.boardId
+      );
+      if (index !== -1) {
+        state.boardList[index] = action.payload.data;
+      }
+    },
     delBoard: (state, action) => {
       state.boardList = state.boardList.filter(
         (board) => board._id !== action.payload.boardId
@@ -34,6 +42,7 @@ const boardsSlice = createSlice({
 export const {
   setBoards,
   addBoard,
+  update,
   delBoard,
   deleteAllBoards,
   setActiveBoardId,
