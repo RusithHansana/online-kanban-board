@@ -22,7 +22,7 @@ const Sidebar = () => {
     return (
         <div className="app__sidebar">
             <div className="app__sidebar-bar">
-                <h1 className="app__sidebar-title">Your Boards</h1>
+                <h1 className="app__sidebar-title">Your Projects</h1>
                 <div className="app__sidebar-scroll">
                     <ul className="boards">
                         {

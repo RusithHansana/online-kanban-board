@@ -9,6 +9,7 @@
     margin: 2rem 1rem;
 
     button {
+
         height: 100%;
         display: flex;
         justify-content: flex-start;
@@ -22,7 +23,11 @@
         cursor: pointer;
         
         li {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
             background: var(--secondary-color);
+            width: 250px;
         }
     }
 }

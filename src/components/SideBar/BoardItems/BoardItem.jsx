@@ -22,6 +22,9 @@ const BoardItem = ({ board }) => {
     }
 
     let style = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         background: `var(${board.color})`,
         color: 'var(--secondary-color)',
         borderRadius: '10px',
