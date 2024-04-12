@@ -17,8 +17,6 @@ const Sidebar = () => {
         }
     }, [boards]);
 
-    if (!boards) return <h1>No Boards</h1>
-
     return (
         <div className="app__sidebar">
             <div className="app__sidebar-bar">
