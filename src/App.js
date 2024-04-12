@@ -45,15 +45,18 @@ const App = () => {
           <MainScreen setToggleProjectModal={setToggleProjectModal} />
         )
       }
-      {toggleProjectModal ? (
-        <>
-          <div
-            onClick={() => setToggleProjectModal(!toggleProjectModal)}
-            className="overlay"
-          ></div>
-          <Modal toggle={setToggleProjectModal} />
-        </>
-      ) : null}
+      {
+        // toggling the Modal
+        toggleProjectModal ? (
+          <>
+            <div
+              onClick={() => setToggleProjectModal(!toggleProjectModal)}
+              className="overlay"
+            ></div>
+            <Modal toggle={setToggleProjectModal} />
+          </>
+        ) : null
+      }
       <ToastContainer />
     </div>
   );
