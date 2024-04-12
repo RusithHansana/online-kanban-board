@@ -10,6 +10,7 @@ import MainScreen from "./screens/MainScreen.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
 import Modal from "./components/Modal/Modal.jsx";
 import "./App.scss";
+import NoBoardsMessage from "./components/NoBoardsMessage/NoBoardsMessage.jsx";
 
 const App = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
@@ -39,23 +40,7 @@ const App = () => {
       {
         // If there are no boards, show a message to create a new board
         boardList.length === 0 ? (
-          <div className="App__right">
-            <div className="App__right create-board">
-              <div>
-                <p>
-                  It looks like you don't have any projects created yet. Why not
-                  try creating one?
-                </p>
-                <div className="btn-create">
-                  <button
-                    onClick={() => setToggleProjectModal(!toggleProjectModal)}
-                  >
-                    Create A Project
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <NoBoardsMessage toggle={setToggleProjectModal} />
         ) : (
           <MainScreen setToggleProjectModal={setToggleProjectModal} />
         )

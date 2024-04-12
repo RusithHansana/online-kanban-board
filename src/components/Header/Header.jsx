@@ -13,13 +13,14 @@ import { toast } from "react-toastify";
 import './Header.scss';
 
 const Header = ({ userName, toggle }) => {
+    const userInfo = useSelector((state) => state.auth.userInfo);
+    const boardList = useSelector((state) => state.boards.boardList);
+    const activeBoardId = useSelector((state) => state.boards.activeBoardId);
+
     const inputRef = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [boardName, setBoardName] = useState('');
-
-    const boardList = useSelector((state) => state.boards.boardList);
-    const activeBoardId = useSelector((state) => state.boards.activeBoardId);
 
     const activeBoard = boardList.find(board => board._id === activeBoardId);
 
@@ -43,7 +44,7 @@ const Header = ({ userName, toggle }) => {
 
     const handleDeleteBoard = async () => {
         try {
-            const response = await deleteBoard({ boardId: activeBoard._id }).unwrap();
+            const response = await deleteBoard({ boardId: activeBoard._id, userId: userInfo._id }).unwrap();
             response && dispatch(delBoard({ boardId: activeBoard._id }));
         } catch (error) {
             toast.error("Failed to delete project");
