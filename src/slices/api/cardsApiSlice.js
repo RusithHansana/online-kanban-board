@@ -4,11 +4,10 @@ const Cards_URL = "http://localhost:5000/api/cards";
 
 export const cardsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getCards: builder.mutation({
+    getCards: builder.query({
       query: (data) => ({
-        url: `${Cards_URL}/`,
-        method: "POST",
-        body: data,
+        url: `${Cards_URL}/?boardId=${data}`,
+        method: "GET",
       }),
     }),
     addCards: builder.mutation({
@@ -41,7 +40,7 @@ export const cardsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetCardsMutation,
+  useGetCardsQuery,
   useAddCardsMutation,
   useUpdateCardsMutation,
   useDeleteCardMutation,

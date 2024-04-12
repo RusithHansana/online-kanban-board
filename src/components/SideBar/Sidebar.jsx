@@ -17,6 +17,8 @@ const Sidebar = () => {
         }
     }, [boards]);
 
+    if (!boards) return <h1>No Boards</h1>
+
     return (
         <div className="app__sidebar">
             <div className="app__sidebar-bar">
@@ -24,13 +26,15 @@ const Sidebar = () => {
                 <div className="app__sidebar-scroll">
                     <ul className="boards">
                         {
-                            boards.length !== 0 ?
-                                boards.map(board => {
+                            boards.map(board => {
+                                if (board) {
                                     return <BoardItem
                                         board={board}
                                         key={board._id}
                                     />
-                                }) : <p>You don't have any projects yet...</p>
+                                }
+                                return null;
+                            })
                         }
                     </ul>
                 </div>

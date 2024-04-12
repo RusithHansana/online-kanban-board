@@ -7,3 +7,5 @@ export const apiSlice = createApi({
   tagTypes: ["User", "Boards"],
   endpoints: (builder) => ({}),
 });
+
+export const { usePrefetch } = apiSlice;

@@ -78,7 +78,7 @@ const SignForm = ({ isRegistered, handleButton }) => {
       try {
         const res = await register({ username, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
-        navigate("/yourboards");
+        navigate("/main");
       } catch (error) {
         toast.error(error?.data?.message || error.error)
       }
@@ -86,7 +86,7 @@ const SignForm = ({ isRegistered, handleButton }) => {
       try {
         const res = await login({ email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
-        navigate("/yourboards");
+        navigate("/main");
       } catch (error) {
         toast.error(error?.data?.message || error.error)
       }

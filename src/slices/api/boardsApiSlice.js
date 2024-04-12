@@ -1,5 +1,4 @@
 import { apiSlice } from "./apiSlice";
-import { setBoards } from "../state/boardSlice.js";
 
 const Boards_URL = "http://localhost:5000/api/boards";
 

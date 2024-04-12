@@ -4,11 +4,10 @@ const Tasks_URL = "http://localhost:5000/api/tasks";
 
 export const tasksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getTasks: builder.mutation({
+    getTasks: builder.query({
       query: (data) => ({
-        url: `${Tasks_URL}/`,
-        method: "POST",
-        body: data,
+        url: `${Tasks_URL}/?cardId=${data}`,
+        method: "GET",
       }),
     }),
     addTasks: builder.mutation({
@@ -41,7 +40,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetTasksMutation,
+  useGetTasksQuery,
   useAddTasksMutation,
   useUpdateTasksMutation,
   useDeleteTaskMutation,

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../slices/api/usersApiSlice.js";
 import { useUpdateBoardMutation, useDeleteBoardMutation } from "../../slices/api/boardsApiSlice.js";
-import { delBoard, update } from "../../slices/state/boardSlice.js";
+import { delBoard, update, setActiveBoardId } from "../../slices/state/boardSlice.js";
 
 import { logout } from "../../slices/state/authSlice.js";
 import { LogOut, Plus, Trash2 } from "react-feather";
@@ -12,11 +12,16 @@ import { toast } from "react-toastify";
 
 import './Header.scss';
 
-const Header = ({ activeBoard, userName, toggle }) => {
+const Header = ({ userName, toggle }) => {
     const inputRef = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [boardName, setBoardName] = useState('');
+
+    const boardList = useSelector((state) => state.boards.boardList);
+    const activeBoardId = useSelector((state) => state.boards.activeBoardId);
+
+    const activeBoard = boardList.find(board => board._id === activeBoardId);
 
     const [logoutApiCall] = useLogoutMutation();
     const [updateBoard] = useUpdateBoardMutation();
@@ -52,7 +57,10 @@ const Header = ({ activeBoard, userName, toggle }) => {
     const updateBoardData = async (boardName) => {
         try {
             const response = await updateBoard({ boardId: activeBoard._id, boardName }).unwrap();
-            response && dispatch(update({ boardId: activeBoard._id, data: response }));
+            if (response) {
+                dispatch(update({ boardId: activeBoard._id, data: response }));
+                dispatch(setActiveBoardId(response._id));
+            }
         } catch (error) {
             toast.error("Failed to update project");
         }

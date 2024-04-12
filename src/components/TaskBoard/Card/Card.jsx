@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useAddTasksMutation, useGetTasksMutation } from '../../../slices/api/tasksApiSlice.js';
-import { Plus, Trash2 } from 'react-feather'
+import { useDispatch } from 'react-redux';
+import { useAddTasksMutation } from '../../../slices/api/tasksApiSlice.js';
 
 import Task from '../Task/Task';
-import './Card.scss';
+import { Plus, Trash2 } from 'react-feather'
 import { toast } from 'react-toastify';
 
+import './Card.scss';
 
-const Card = ({ card, index, handleCardDelete }) => {
+const Card = ({ card, tasks, index, handleCardDelete }) => {
     const [enabled, setEnabled] = useState(false);
-    const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState("");
 
-    const [getTasks] = useGetTasksMutation();
     const [addTasks] = useAddTasksMutation();
-
-    const fetchTasks = async (cardId) => {
-        const response = await getTasks({ cardId: cardId }).unwrap();
-        setTasks(response);
-    }
+    const dispatch = useDispatch();
 
     const handleAddTask = async (e) => {
         if (newTask === "") return;
@@ -27,7 +22,6 @@ const Card = ({ card, index, handleCardDelete }) => {
         if (e.key === 'Enter' || e.type === 'click') {
             try {
                 const response = await addTasks({ task: newTask, cardId: card._id }).unwrap();
-                setTasks([...tasks, response]);
                 e.target.value = "";
             } catch (error) {
                 toast.error('Failed to add task');
@@ -45,12 +39,12 @@ const Card = ({ card, index, handleCardDelete }) => {
 
     useEffect(() => {
         const animation = requestAnimationFrame(() => setEnabled(true));
-        fetchTasks(card._id);
+
         return () => {
             cancelAnimationFrame(animation);
             setEnabled(false);
         };
-    }, [card._id]);
+    }, []);
 
     if (!enabled) {
         return null;
@@ -88,7 +82,7 @@ const Card = ({ card, index, handleCardDelete }) => {
                                     ref={provided.innerRef}
                                 >
                                     {
-                                        tasks.map((task, index) => (
+                                        card.tasks.map((task, index) => (
                                             <Draggable
                                                 draggableId={task._id}
                                                 index={index}

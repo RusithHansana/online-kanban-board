@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import { useGetCardsMutation, useAddCardsMutation } from '../../slices/api/cardsApiSlice.js';
+import { useAddCardsMutation } from '../../slices/api/cardsApiSlice.js';
 import { useDeleteCardMutation } from '../../slices/api/cardsApiSlice.js';
-
 import Card from './Card/Card';
+
 import { Plus } from 'react-feather';
-import './TaskBoard.scss';
 import { ToastContainer, toast } from 'react-toastify';
+import './TaskBoard.scss';
 
 
-const TaskBoard = ({ activeBoardId }) => {
+
+const TaskBoard = ({ cards, activeBoardId }) => {
   //react-beautiful-dnd does not work with strict mode  console.log(CardList);
   //this is the way to bypass it
   const [enabled, setEnabled] = useState(false);
-  const [cards, setCards] = useState([]);
+  const [cardList, setCardList] = useState([]);
   const [newCard, setNewCard] = useState("");
 
-  const [getCards] = useGetCardsMutation();
   const [addCards] = useAddCardsMutation();
   const [deleteCard] = useDeleteCardMutation();
-
-  const fetchCards = async (boardId) => {
-    const response = await getCards({ boardId: boardId }).unwrap();
-    setCards(response);
-  };
 
   const handleCardInput = (e) => {
     setNewCard(e.target.value);
@@ -34,8 +29,8 @@ const TaskBoard = ({ activeBoardId }) => {
 
     if (e.key === 'Enter' || e.type === 'click') {
       try {
-        const response = await addCards({ cardName: newCard, boardId: activeBoardId }).unwrap();
-        setCards([...cards, response]);
+        const response = await addCards({ cardName: e.target.value, boardId: activeBoardId }).unwrap();
+        setCardList([...cardList, response]);
         e.target.value = "";
         toast.success('Card added successfully');
       } catch (error) {
@@ -46,8 +41,8 @@ const TaskBoard = ({ activeBoardId }) => {
 
   const handleCardDelete = async (cardId) => {
     try {
-      const response = await deleteCard({ cardId }).unwrap();
-      setCards([...cards.filter(card => card._id !== cardId)]);
+      const response = await deleteCard({ cardId: cardId, boardId: activeBoardId }).unwrap();
+      setCardList(cardList.filter(card => card._id !== cardId));
       toast.success('Card deleted successfully');
     } catch (error) {
       toast.error('Failed to delete card');
@@ -56,14 +51,12 @@ const TaskBoard = ({ activeBoardId }) => {
 
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
-    fetchCards(activeBoardId);
-
-
+    setCardList(cards);
     return () => {
       cancelAnimationFrame(animation);
       setEnabled(false);
     };
-  }, [activeBoardId]);
+  }, [cards]);
 
   if (!enabled) {
     return null;
@@ -82,10 +75,11 @@ const TaskBoard = ({ activeBoardId }) => {
           >
             <ul className="app__taskboard-cards">
               {
-                cards.length !== 0 ? (
+                cardList ? (
 
-                  cards.map((card, index) => (
+                  cardList.map((card, index) => (
                     <li key={card._id}>
+
                       <Card card={card} index={index} handleCardDelete={handleCardDelete} />
                     </li>
                   ))

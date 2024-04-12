@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useGetBoardsQuery } from "./slices/api/boardsApiSlice.js";
-import { setBoards } from "./slices/state/boardSlice.js";
-
+import { useDispatch } from "react-redux";
+import { setActiveBoardId, setBoards } from "./slices/state/boardSlice.js";
 import { ToastContainer } from "react-toastify";
+import { Plus } from "react-feather";
 
-import Header from "./components/Header/Header.jsx";
+import MainScreen from "./screens/MainScreen.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
-import TaskBoard from "./components/TaskBoard/TaskBoard.jsx";
 import Modal from "./components/Modal/Modal.jsx";
 import "./App.scss";
 
 const App = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
-  const activeBoardId = useSelector((state) => state.boards.activeBoardId);
   const boardList = useSelector((state) => state.boards.boardList);
-
-  const dispatch = useDispatch();
-
   const [toggleProjectModal, setToggleProjectModal] = useState(false);
 
   const {
@@ -28,41 +22,55 @@ const App = () => {
     isSuccess,
   } = useGetBoardsQuery(userInfo._id);
 
-  const onDragEnd = (result) => {
-    console.log(result);
-    const { destination, source, draggableId, type } = result;
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    isSuccess && dispatch(setBoards(boards));
-  }, [isSuccess]);
+    if (userInfo && isSuccess && boards) {
+      dispatch(setBoards(boards));
+    }
+  }, [userInfo, isSuccess, boards]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (!isSuccess) return <div>Failed to load</div>;
 
   return (
-    !isLoading && (
-      <div className="App">
-        <Sidebar />
-        <div className="App__right">
-          <Header
-            activeBoard={boardList.find((board) => board._id === activeBoardId)}
-            toggle={setToggleProjectModal}
-            userName={userInfo.username}
-          />
-          <DragDropContext onDragEnd={onDragEnd}>
-            <TaskBoard activeBoardId={activeBoardId} />
-          </DragDropContext>
-        </div>
-        {toggleProjectModal ? (
-          <>
-            <div
-              onClick={() => setToggleProjectModal(!toggleProjectModal)}
-              className="overlay"
-            ></div>
-            <Modal toggle={setToggleProjectModal} />
-          </>
-        ) : null}
-        <ToastContainer />
-      </div>
-    )
+    <div className="App">
+      <Sidebar />
+      {
+        // If there are no boards, show a message to create a new board
+        boardList.length === 0 ? (
+          <div className="App__right">
+            <div className="App__right create-board">
+              <div>
+                <p>
+                  It looks like you don't have any projects created yet. Why not
+                  try creating one?
+                </p>
+                <div className="btn-create">
+                  <button
+                    onClick={() => setToggleProjectModal(!toggleProjectModal)}
+                  >
+                    Create A Project
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <MainScreen setToggleProjectModal={setToggleProjectModal} />
+        )
+      }
+      {toggleProjectModal ? (
+        <>
+          <div
+            onClick={() => setToggleProjectModal(!toggleProjectModal)}
+            className="overlay"
+          ></div>
+          <Modal toggle={setToggleProjectModal} />
+        </>
+      ) : null}
+      <ToastContainer />
+    </div>
   );
 };
 
