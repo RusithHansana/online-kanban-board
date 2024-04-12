@@ -11,6 +11,7 @@ import './Card.scss';
 
 const Card = ({ card, tasks, index, handleCardDelete }) => {
     const [enabled, setEnabled] = useState(false);
+    const [taskList, setTaskList] = useState(card.tasks);
     const [newTask, setNewTask] = useState("");
 
     const [addTasks] = useAddTasksMutation();
@@ -22,6 +23,7 @@ const Card = ({ card, tasks, index, handleCardDelete }) => {
         if (e.key === 'Enter' || e.type === 'click') {
             try {
                 const response = await addTasks({ task: newTask, cardId: card._id }).unwrap();
+                response && setTaskList([...taskList, response]);
                 e.target.value = "";
             } catch (error) {
                 toast.error('Failed to add task');
@@ -82,7 +84,7 @@ const Card = ({ card, tasks, index, handleCardDelete }) => {
                                     ref={provided.innerRef}
                                 >
                                     {
-                                        card.tasks.map((task, index) => (
+                                        taskList.map((task, index) => (
                                             <Draggable
                                                 draggableId={task._id}
                                                 index={index}
