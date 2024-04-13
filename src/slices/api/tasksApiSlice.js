@@ -31,6 +31,14 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Cards"],
     }),
+    moveTasks: builder.mutation({
+      query: (data) => ({
+        url: `${Tasks_URL}/move`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Cards"],
+    }),
     deleteTask: builder.mutation({
       query: ({ data }) => ({
         url: `${Tasks_URL}/delete`,
@@ -52,6 +60,7 @@ export const {
   useAddTasksMutation,
   useUpdateTasksMutation,
   useSwapTasksMutation,
+  useMoveTasksMutation,
   useDeleteTaskMutation,
   useDeleteAllTasksMutation,
 } = tasksApiSlice;

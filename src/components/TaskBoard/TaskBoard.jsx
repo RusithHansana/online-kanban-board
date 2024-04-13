@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useAddCardsMutation } from '../../slices/api/cardsApiSlice.js';
 import { useDeleteCardMutation } from '../../slices/api/cardsApiSlice.js';
-import { useSwapTasksMutation } from '../../slices/api/tasksApiSlice.js';
+import { useMoveTasksMutation, useSwapTasksMutation } from '../../slices/api/tasksApiSlice.js';
 import Card from './Card/Card';
 
 import { Plus } from 'react-feather';
@@ -21,6 +21,7 @@ const TaskBoard = ({ cards, activeBoardId }) => {
   const [addCards] = useAddCardsMutation();
   const [deleteCard] = useDeleteCardMutation();
   const [swapTasks] = useSwapTasksMutation();
+  const [moveTasks] = useMoveTasksMutation();
 
   const handleCardInput = (e) => {
     setNewCard(e.target.value);
@@ -52,7 +53,11 @@ const TaskBoard = ({ cards, activeBoardId }) => {
   }
 
   const handleSwap = async (taskList, cardId) => {
-    const response = await swapTasks({ swappedTasks: taskList, cardId: cardId }).unwrap();
+    await swapTasks({ swappedTasks: taskList, cardId: cardId }).unwrap();
+  }
+
+  const handleMove = async (dragId, dropId, taskId) => {
+    await moveTasks({ dragCardId: dragId, dropCardId: dropId, taskId: taskId }).unwrap();
   }
 
   const handleDragEnd = (result) => {
@@ -69,10 +74,10 @@ const TaskBoard = ({ cards, activeBoardId }) => {
     if (source.droppableId === destination.droppableId) {
       taskList.splice(source.index, 1);
       taskList.splice(destination.index, 0, dragTask);
+      handleSwap(taskList, card._id);
     }
 
-    handleSwap(taskList, card._id);
-
+    handleMove(source.droppableId, destination.droppableId, draggableId);
 
   }
 
