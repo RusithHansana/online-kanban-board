@@ -44,7 +44,7 @@ const TaskBoard = ({ cards, activeBoardId }) => {
 
   const handleCardDelete = async (cardId) => {
     try {
-      const response = await deleteCard({ cardId: cardId, boardId: activeBoardId }).unwrap();
+      await deleteCard({ cardId: cardId, boardId: activeBoardId }).unwrap();
       setCardList(cardList.filter(card => card._id !== cardId));
       toast.success('Card deleted successfully');
     } catch (error) {
@@ -62,7 +62,7 @@ const TaskBoard = ({ cards, activeBoardId }) => {
 
   const handleDragEnd = (result) => {
     const { destination, source, draggableId } = result;
-    const index = cardList.findIndex(card => card._id === source.droppableId);
+
     const card = cardList.find(card => card._id === source.droppableId);
     const taskList = [...card.tasks];
     const dragTask = card.tasks[source.index];
@@ -74,10 +74,16 @@ const TaskBoard = ({ cards, activeBoardId }) => {
     if (source.droppableId === destination.droppableId) {
       taskList.splice(source.index, 1);
       taskList.splice(destination.index, 0, dragTask);
+
       handleSwap(taskList, card._id);
+
+    } else {
+
+      handleMove(source.droppableId, destination.droppableId, draggableId);
+
     }
 
-    handleMove(source.droppableId, destination.droppableId, draggableId);
+
 
   }
 
