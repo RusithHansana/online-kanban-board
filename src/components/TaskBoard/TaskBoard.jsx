@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { useAddCardsMutation } from '../../slices/api/cardsApiSlice.js';
 import { useDeleteCardMutation } from '../../slices/api/cardsApiSlice.js';
 import { useSwapTasksMutation } from '../../slices/api/tasksApiSlice.js';
@@ -98,7 +98,7 @@ const TaskBoard = ({ cards, activeBoardId }) => {
               cardList.map((card, index) => (
                 <li key={card._id}>
 
-                  <Card card={card} index={index} handleCardDelete={handleCardDelete} />
+                  <Card card={card} handleCardDelete={handleCardDelete} />
                 </li>
               ))
             ) : <p>You have no cards yet...</p>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useDispatch } from 'react-redux';
 import { useAddTasksMutation } from '../../../slices/api/tasksApiSlice.js';
 
 import Task from '../Task/Task';
@@ -9,13 +8,12 @@ import { toast } from 'react-toastify';
 
 import './Card.scss';
 
-const Card = ({ card, tasks, index, handleCardDelete }) => {
+const Card = ({ card, handleCardDelete }) => {
     const [enabled, setEnabled] = useState(false);
     const [taskList, setTaskList] = useState(card.tasks);
     const [newTask, setNewTask] = useState("");
 
     const [addTasks] = useAddTasksMutation();
-    const dispatch = useDispatch();
 
     const handleAddTask = async (e) => {
         if (newTask === "") return;

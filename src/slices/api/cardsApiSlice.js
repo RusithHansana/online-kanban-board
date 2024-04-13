@@ -9,6 +9,7 @@ export const cardsApiSlice = apiSlice.injectEndpoints({
         url: `${Cards_URL}/?boardId=${data}`,
         method: "GET",
       }),
+      providesTags: ["Cards"],
     }),
     addCards: builder.mutation({
       query: (data) => ({

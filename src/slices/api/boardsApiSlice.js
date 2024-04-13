@@ -9,6 +9,7 @@ export const boardsApiSlice = apiSlice.injectEndpoints({
         url: `${Boards_URL}/?userId=${data}`,
         method: "GET",
       }),
+      providesTags: ["Boards"],
     }),
     addBoards: builder.mutation({
       query: (data) => ({

@@ -10,6 +10,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      providesTags: ["User"],
     }),
     register: builder.mutation({
       query: (data) => ({
