@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useAddCardsMutation } from '../../slices/api/cardsApiSlice.js';
 import { useDeleteCardMutation } from '../../slices/api/cardsApiSlice.js';
+import { useSwapTasksMutation } from '../../slices/api/tasksApiSlice.js';
 import Card from './Card/Card';
 
 import { Plus } from 'react-feather';
@@ -19,6 +20,7 @@ const TaskBoard = ({ cards, activeBoardId }) => {
 
   const [addCards] = useAddCardsMutation();
   const [deleteCard] = useDeleteCardMutation();
+  const [swapTasks] = useSwapTasksMutation();
 
   const handleCardInput = (e) => {
     setNewCard(e.target.value);
@@ -49,6 +51,31 @@ const TaskBoard = ({ cards, activeBoardId }) => {
     }
   }
 
+  const handleSwap = async (taskList, cardId) => {
+    const response = await swapTasks({ swappedTasks: taskList, cardId: cardId }).unwrap();
+  }
+
+  const handleDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+    const index = cardList.findIndex(card => card._id === source.droppableId);
+    const card = cardList.find(card => card._id === source.droppableId);
+    const taskList = [...card.tasks];
+    const dragTask = card.tasks[source.index];
+
+    if (!destination) {
+      return;
+    }
+
+    if (source.droppableId === destination.droppableId) {
+      taskList.splice(source.index, 1);
+      taskList.splice(destination.index, 0, dragTask);
+    }
+
+    handleSwap(taskList, card._id);
+
+
+  }
+
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
     setCardList(cards);
@@ -62,47 +89,36 @@ const TaskBoard = ({ cards, activeBoardId }) => {
     return null;
   }
   return (
-    <Droppable
-      droppableId="all"
-      direction="horizontal"
-      type="card"
-    >
-      {
-        (provided) => (
-          <div className="app__taskboard"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            <ul className="app__taskboard-cards">
-              {
-                cardList ? (
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="app__taskboard">
+        <ul className="app__taskboard-cards">
+          {
+            cardList ? (
 
-                  cardList.map((card, index) => (
-                    <li key={card._id}>
+              cardList.map((card, index) => (
+                <li key={card._id}>
 
-                      <Card card={card} index={index} handleCardDelete={handleCardDelete} />
-                    </li>
-                  ))
-                ) : <p>You have no cards yet...</p>
-              }
-              {provided.placeholder}
-              <div className='addtask card'>
-                <Plus className='addbtn' onClick={handleAddCard} />
-                <input
-                  type='text'
-                  placeholder='Add new Card'
-                  onChange={handleCardInput}
-                  onKeyDown={handleAddCard}
-                />
-              </div>
-            </ul>
-            <ToastContainer />
+                  <Card card={card} index={index} handleCardDelete={handleCardDelete} />
+                </li>
+              ))
+            ) : <p>You have no cards yet...</p>
+          }
+
+          <div className='addtask card'>
+            <Plus className='addbtn' onClick={handleAddCard} />
+            <input
+              type='text'
+              placeholder='Add new Card'
+              onChange={handleCardInput}
+              onKeyDown={handleAddCard}
+            />
           </div>
-        )
-      }
-
-    </Droppable >
-  );
+        </ul>
+        <ToastContainer />
+      </div>
+    </DragDropContext>
+  )
 }
+
 
 export default TaskBoard;

@@ -53,76 +53,65 @@ const Card = ({ card, tasks, index, handleCardDelete }) => {
     }
 
     return (
-        <Draggable
-            draggableId={card._id}
-            index={index}
-            type="card"
-        >
-            {(provided) => (
-                <div
-                    className="app__card"
-                    {...provided.draggableProps}
-                    ref={provided.innerRef}
-                >
-                    <div className="cardheader">
-                        <h1 className="app__card-title"
-                            {...provided.dragHandleProps}
-                        >
-                            {card.cardName}
-                        </h1>
-                        <Trash2 onClick={() => deteleCard()} />
-                    </div>
-                    <Droppable
-                        droppableId={card._id}
-                        type="task"
-                    >
-                        {
-                            (provided) => (
-                                <ul
-                                    className="app__card-tasklist"
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
-                                >
-                                    {
-                                        taskList.map((task, index) => (
-                                            <Draggable
-                                                draggableId={task._id}
-                                                index={index}
-                                                type="task"
-                                                key={task._id}
-                                            >
-                                                {
-                                                    (provided) => (
-                                                        <li
-                                                            {...provided.draggableProps}
-                                                            {...provided.dragHandleProps}
-                                                            ref={provided.innerRef}
-                                                        >
-                                                            <Task task={task} />
-                                                        </li>
-                                                    )
-                                                }
-                                            </Draggable>
+        <div className="app__card">
+            <div className="cardheader">
+                <h1 className="app__card-title"
 
-                                        ))}
-                                    {provided.placeholder}
-                                    <div className='addtask'>
-                                        <Plus className='addbtn' onClick={handleAddTask} />
-                                        <input
-                                            type='text'
-                                            placeholder='Add new task'
-                                            onChange={handleTaskInput}
-                                            onKeyDown={handleAddTask}
-                                        />
-                                    </div>
-                                </ul>
-                            )
-                        }
-                    </Droppable>
-                </div>
-            )}
-        </Draggable>
+                >
+                    {card.cardName}
+                </h1>
+                <Trash2 onClick={() => deteleCard()} />
+            </div>
+            <Droppable
+                droppableId={card._id}
+                type="task"
+            >
+                {
+                    (provided) => (
+                        <ul
+                            className="app__card-tasklist"
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                        >
+                            {
+                                taskList.map((task, index) => (
+                                    <Draggable
+                                        draggableId={task._id}
+                                        index={index}
+                                        type="task"
+                                        key={task._id}
+                                    >
+                                        {
+                                            (provided) => (
+                                                <li
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    ref={provided.innerRef}
+                                                >
+                                                    <Task task={task} />
+                                                </li>
+                                            )
+                                        }
+                                    </Draggable>
+
+                                ))}
+                            {provided.placeholder}
+                            <div className='addtask'>
+                                <Plus className='addbtn' onClick={handleAddTask} />
+                                <input
+                                    type='text'
+                                    placeholder='Add new task'
+                                    onChange={handleTaskInput}
+                                    onKeyDown={handleAddTask}
+                                />
+                            </div>
+                        </ul>
+                    )
+                }
+            </Droppable>
+        </div>
     )
 }
+
 
 export default Card;
