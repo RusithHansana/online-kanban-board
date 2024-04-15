@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
 
 import './SignUp.scss';
 import SignForm from './SignForm';
 
 const SignUp = () => {
+    const userInfo = useSelector((state) => state.auth.userInfo);
     const [isRegistered, setIsRegistered] = useState(true);
     const animation = useAnimation();
+    const navigate = useNavigate();
 
     useEffect(() => {
+        if (userInfo) {
+            navigate('/main');
+            return;
+        }
         animation.start({
             opacity: 0,
             x: 0,

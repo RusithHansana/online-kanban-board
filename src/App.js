@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetBoardsQuery } from "./slices/api/boardsApiSlice.js";
 import { useDispatch } from "react-redux";
-import { setActiveBoardId, setBoards } from "./slices/state/boardSlice.js";
+import { useNavigate } from "react-router-dom";
+import { setBoards } from "./slices/state/boardSlice.js";
 import { ToastContainer } from "react-toastify";
-import { Plus } from "react-feather";
 
 import MainScreen from "./screens/MainScreen.jsx";
 import Sidebar from "./components/SideBar/Sidebar.jsx";
@@ -17,15 +17,20 @@ const App = () => {
   const boardList = useSelector((state) => state.boards.boardList);
   const [toggleProjectModal, setToggleProjectModal] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     data: boards,
     isLoading,
     isSuccess,
-  } = useGetBoardsQuery(userInfo._id);
-
-  const dispatch = useDispatch();
+  } = useGetBoardsQuery(userInfo?._id);
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+
     if (userInfo && isSuccess && boards) {
       dispatch(setBoards(boards));
     }

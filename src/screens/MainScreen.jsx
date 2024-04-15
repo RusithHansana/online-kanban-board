@@ -20,7 +20,7 @@ const MainScreen = ({ setToggleProjectModal }) => {
         <div className="App__right">
             <Header
                 toggle={setToggleProjectModal}
-                userName={userInfo.username}
+                userName={userInfo?.username}
             />
             <TaskBoard
                 cards={cards}

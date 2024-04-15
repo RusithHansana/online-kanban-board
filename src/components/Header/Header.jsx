@@ -90,19 +90,19 @@ const Header = ({ userName, toggle }) => {
                     type="text"
                     placeholder={boardName}
                     onKeyDown={handleInputChange} />
-                <div className="btn-header">
-                    <Plus onClick={handleModal} />
+                <div className="btn-header" onClick={handleModal}>
+                    <Plus />
                 </div>
-                <div className="btn-header">
-                    <Trash2 onClick={handleBtnDelete} />
+                <div className="btn-header" onClick={handleBtnDelete}>
+                    <Trash2 />
                 </div>
             </div>
             <div className="app__navbar-right">
                 <div className="userinfo">
                     {userName}
                 </div>
-                <div className="btn-logout">
-                    <LogOut onClick={logoutHandler} />
+                <div className="btn-logout" onClick={logoutHandler}>
+                    <LogOut />
                 </div>
             </div>
         </div>
