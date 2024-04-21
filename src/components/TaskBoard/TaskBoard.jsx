@@ -99,6 +99,7 @@ const TaskBoard = ({ cards, activeBoardId }) => {
   if (!enabled) {
     return null;
   }
+
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="app__taskboard">
