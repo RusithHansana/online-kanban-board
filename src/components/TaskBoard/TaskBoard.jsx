@@ -12,8 +12,6 @@ import './TaskBoard.scss';
 
 
 const TaskBoard = ({ cards, activeBoardId }) => {
-  //react-beautiful-dnd does not work with strict mode  console.log(CardList);
-  //this is the way to bypass it
   const [enabled, setEnabled] = useState(false);
   const [cardList, setCardList] = useState([]);
   const [newCard, setNewCard] = useState("");
@@ -88,6 +86,8 @@ const TaskBoard = ({ cards, activeBoardId }) => {
   }
 
   useEffect(() => {
+    //react-beautiful-dnd does not work with strict mode
+    //this is the way to bypass it
     const animation = requestAnimationFrame(() => setEnabled(true));
     setCardList(cards);
     return () => {
