@@ -1,13 +1,13 @@
 .App {
     height: 100vh; //app is taking the height of the device
     display: grid;
-    grid-template-columns: 1fr 4fr; /* Two columns with equal width */ /* Adjust the gap between columns */
+    grid-template-columns: 1fr 4fr;
 }
 
 .App__right {
     height: 100vh;
     display: grid;
-    grid-template-rows: 1fr 19fr; /* Two rows with equal height */
+    grid-template-rows: 1fr 19fr; 
 
     .create-board {
         display: flex;

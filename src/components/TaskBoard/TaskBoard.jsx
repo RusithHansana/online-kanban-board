@@ -80,9 +80,6 @@ const TaskBoard = ({ cards, activeBoardId }) => {
       handleMove(source.droppableId, destination.droppableId, task);
 
     }
-
-
-
   }
 
   useEffect(() => {

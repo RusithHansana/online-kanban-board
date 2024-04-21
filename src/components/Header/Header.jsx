@@ -91,10 +91,10 @@ const Header = ({ userName, toggle }) => {
                     placeholder={boardName}
                     onKeyDown={handleInputChange} />
                 <div className="btn-header" onClick={handleModal}>
-                    <Plus />
+                    <Plus /> <p>Create</p>
                 </div>
                 <div className="btn-header" onClick={handleBtnDelete}>
-                    <Trash2 />
+                    <Trash2 /> <p>Delete</p>
                 </div>
             </div>
             <div className="app__navbar-right">
