@@ -56,8 +56,8 @@ const TaskBoard = ({ cards, activeBoardId }) => {
     await swapTasks({ swappedTasks: taskList, cardId: cardId }).unwrap();
   }
 
-  const handleMove = async (dragId, dropId, taskId) => {
-    await moveTasks({ dragCardId: dragId, dropCardId: dropId, taskId: taskId }).unwrap();
+  const handleMove = async (dragId, dropId, task) => {
+    await moveTasks({ dragCardId: dragId, dropCardId: dropId, task: task }).unwrap();
   }
 
   const handleDragEnd = (result) => {
@@ -78,8 +78,8 @@ const TaskBoard = ({ cards, activeBoardId }) => {
       handleSwap(taskList, card._id);
 
     } else {
-
-      handleMove(source.droppableId, destination.droppableId, draggableId);
+      const task = taskList.find(task => task._id === draggableId);
+      handleMove(source.droppableId, destination.droppableId, task);
 
     }
 
