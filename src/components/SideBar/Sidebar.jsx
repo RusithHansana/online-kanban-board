@@ -13,7 +13,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         if (boards && boards.length !== 0) {
-            dispatch(setActiveBoardId(boards[0]._id));
+            dispatch(setActiveBoardId(boards[0]?._id));
         }
     }, [boards]);
 
